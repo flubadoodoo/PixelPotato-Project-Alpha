@@ -10,7 +10,7 @@ public class HeightMap {
 	
 	public HeightMap(int width) {
 		random = new Random();
-		maxJump = 50;
+		maxJump = 0;
 		initializeMap(width);
 	}
 	

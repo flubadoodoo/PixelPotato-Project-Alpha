@@ -1,5 +1,7 @@
 package gameplay.map.tiles;
 
+import gameplay.map.Map;
+
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 
@@ -7,15 +9,19 @@ import org.newdawn.slick.SlickException;
 
 public class Tile {
 	
-	private double		x, y;
-	private int			scale;
-	private Rectangle2D	boundingBox;
+	private static final int	SMALL_SIZE	= 29;
+	private static final int	MEDIUM_SIZE	= 62;
+	private static final int	LARGE_SIZE	= 128;
 	
-	public Tile(double d, double y, int scale) throws SlickException {
-		this.x = d;
+	private double				x, y;
+	private int					scale;
+	private Rectangle2D			boundingBox;
+	
+	public Tile(double x, double y, int scale) throws SlickException {
+		this.x = x;
 		this.y = y;
 		this.scale = scale;
-		boundingBox = new Rectangle.Double(d, y, scale, scale);
+		boundingBox = new Rectangle.Double(x - Map.getSPACE() / 2, y, scale + Map.getSPACE(), scale);
 	}
 	
 	// GETTERS & SETTERS
@@ -59,4 +65,17 @@ public class Tile {
 	public void incrementY(double amount) {
 		boundingBox.setFrame(new Rectangle2D.Double(boundingBox.getX(), boundingBox.getY() + amount, boundingBox.getWidth(), boundingBox.getHeight()));
 	}
+	
+	public static int getSMALL_SIZE() {
+		return SMALL_SIZE;
+	}
+	
+	public static int getMEDIUM_SIZE() {
+		return MEDIUM_SIZE;
+	}
+	
+	public static int getLARGE_SIZE() {
+		return LARGE_SIZE;
+	}
+	
 }

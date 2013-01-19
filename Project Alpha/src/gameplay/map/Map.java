@@ -16,7 +16,7 @@ public class Map {
 	
 	// Temp vars
 	private int			width;
-	private int			SPACE;
+	private static int	SPACE;
 	private Random		random;
 	private HeightMap	heightMap;
 	private double		gravity;
@@ -32,7 +32,7 @@ public class Map {
 		heightMap = new HeightMap(width);
 		setTiles(new Tile[width]);
 		initTiles(heightMap.getMap());
-		tileImages = new Image[] { new Image("gameplay/map/tiles/Tile 29.png"), new Image("gameplay/map/tiles/Tile 62.png"), new Image("gameplay/map/tiles/Tile 128.png") };
+		tileImages = new Image[] { new Image("gameplay/map/tiles/Tile " + Tile.getSMALL_SIZE() + ".png"), new Image("gameplay/map/tiles/Tile " + Tile.getMEDIUM_SIZE() + ".png"), new Image("gameplay/map/tiles/Tile " + Tile.getLARGE_SIZE() + ".png") };
 	}
 	
 	private void initTiles(int[] heightMap) throws SlickException {
@@ -40,7 +40,7 @@ public class Map {
 		Rectangle2D boundingBox0 = tiles[0].getBoundingBox();
 		boundingBox0.setFrame(boundingBox0.getX(), boundingBox0.getY() + yOff, boundingBox0.getWidth(), boundingBox0.getHeight());
 		for (int i = 1; i < tiles.length; i++) {
-			tiles[i] = new Tile(tiles[i - 1].getX() + tiles[i - 1].getScale() + SPACE, heightMap[i], getRandomTileScale());
+			tiles[i] = new Tile(tiles[i - 1].getX() + tiles[i - 1].getScale() + getSPACE(), heightMap[i], getRandomTileScale());
 			Rectangle2D boundingBox = tiles[i].getBoundingBox();
 			boundingBox.setFrame(boundingBox.getX(), boundingBox.getY() + yOff, boundingBox.getWidth(), boundingBox.getHeight());
 		}
@@ -48,13 +48,13 @@ public class Map {
 	
 	private int getRandomTileScale() {
 		int size = random.nextInt(8);
-		return (size == 0) ? 128 : (size == 1 || size == 2) ? 62 : 29;
+		return (size == 0) ? Tile.getLARGE_SIZE() : (size == 1 || size == 2) ? Tile.getMEDIUM_SIZE() : Tile.getSMALL_SIZE();
 	}
 	
 	public void drawMap() {
 		for (int i = 0; i < tiles.length; i++) {
 			if (isOnMap(tiles[i]))
-				tileImages[(tiles[i].getScale() == 29) ? 0 : (tiles[i].getScale() == 62) ? 1 : 2].draw((float) (tiles[i].getX() + xOff), (float) (tiles[i].getY() + yOff));
+				tileImages[(tiles[i].getScale() == Tile.getSMALL_SIZE()) ? 0 : (tiles[i].getScale() == Tile.getMEDIUM_SIZE()) ? 1 : 2].draw((float) (tiles[i].getX() + xOff), (float) (tiles[i].getY() + yOff));
 		}
 	}
 	
@@ -124,6 +124,10 @@ public class Map {
 	
 	public void setTileImages(Image[] tileImages) {
 		this.tileImages = tileImages;
+	}
+	
+	public static int getSPACE() {
+		return SPACE;
 	}
 	
 }

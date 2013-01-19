@@ -1,3 +1,13 @@
+------------
+Alpha 0.1.6c
+------------
+ - Added static final int's in Tile class that determine the tile's sizes
+
+------------
+Alpha 0.1.6b
+------------
+ - Fixed Splash screen animation (now waits until animation is finished)
+
 -----------
 Alpha 0.1.6
 -----------
