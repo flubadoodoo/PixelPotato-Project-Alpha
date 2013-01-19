@@ -1,5 +1,9 @@
 package splash;
 
+import helper.Status;
+import helper.Text;
+import helper.Timer;
+
 import java.awt.Color;
 import java.io.IOException;
 
@@ -18,9 +22,6 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import core.Main;
-import helper.Status;
-import helper.Text;
-import helper.Timer;
 
 public class SplashState extends BasicGameState {
 	
@@ -63,7 +64,8 @@ public class SplashState extends BasicGameState {
 		anim.setAutoUpdate(false);
 		anim.stopAt(splashAnim.length - 1);
 		
-		watermark = new Text("Project PixelPotato" + Status.getProjectStatus(), "Walkway", "Bold", 20, Color.BLACK, 1000, 10);
+		watermark = new Text(Status.getProjectStatus(), "Walkway", "Bold", 20, Color.BLACK, 0, 10);
+		watermark.setX(Display.getWidth() - watermark.getWidth() - 10);
 	}
 	
 	private void initTimers(GameContainer gc) {

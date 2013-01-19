@@ -1,3 +1,14 @@
+-----------
+Alpha 0.1.5
+-----------
+ - Fixed bug: Map's yOff was not added to first tile (tile[0])'s bounding box
+ - Changed controls to WAD
+ - Tweaked gravity, speed and jump velocity
+ - Added player walking and general movement state
+ - Changed player sprite to correspond with walking state
+ - Need to fix player animation (Currently just keeps running)
+ - BUG: Hitting the side of a tile while going down causes the player to go through the floor
+
 ------------
 Alpha 0.1.4b
 ------------

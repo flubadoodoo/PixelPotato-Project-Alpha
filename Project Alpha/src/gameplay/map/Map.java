@@ -26,7 +26,7 @@ public class Map {
 		setWidth(width);
 		SPACE = 8;
 		random = new Random();
-		setGravity(-0.1);
+		setGravity(-0.2);
 		heightMap = new HeightMap(width);
 		setTiles(new Tile[width]);
 		initTiles(heightMap.getMap());
@@ -34,6 +34,8 @@ public class Map {
 	
 	private void initTiles(int[] heightMap) throws SlickException {
 		tiles[0] = new Tile(0, heightMap[0], getRandomTileScale());
+		Rectangle2D boundingBox0 = tiles[0].getBoundingBox();
+		boundingBox0.setFrame(boundingBox0.getX(), boundingBox0.getY() + yOff, boundingBox0.getWidth(), boundingBox0.getHeight());
 		for (int i = 1; i < tiles.length; i++) {
 			tiles[i] = new Tile(tiles[i - 1].getX() + tiles[i - 1].getScale() + SPACE, heightMap[i], getRandomTileScale());
 			Rectangle2D boundingBox = tiles[i].getBoundingBox();
