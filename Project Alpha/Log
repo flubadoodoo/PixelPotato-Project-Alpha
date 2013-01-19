@@ -1,4 +1,11 @@
 -----------
+Alpha 0.1.1
+-----------
+ - Player gets draw at fixed x, y position, no physics
+ - HeightMap class stub added
+ - Added loading bar with splash screen
+ 
+-----------
 Alpha 0.1.0
 -----------
  - Can now go back from gameplay state to main menu state (backspace)

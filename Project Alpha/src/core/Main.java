@@ -44,7 +44,7 @@ public class Main extends StateBasedGame {
 		this.addState(new SplashState(SPLASH_STATE));
 		this.addState(new MainMenuState(MAIN_MENU_STATE));
 		this.addState(new GameplayState(GAMEPLAY_STATE));
-		this.enterState(GAMEPLAY_STATE);
+		//this.enterState(GAMEPLAY_STATE);
 	}
 	
 	public static int getMainMenuState() {

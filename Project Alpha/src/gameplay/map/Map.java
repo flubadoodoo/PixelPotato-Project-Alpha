@@ -21,7 +21,7 @@ public class Map {
 		xOff = 0;
 		yOff = 450;
 		setWidth(width);
-		SPACE = 5;
+		SPACE = 4;
 		random = new Random();
 		setTiles(new Tile[width]);
 		initTiles();

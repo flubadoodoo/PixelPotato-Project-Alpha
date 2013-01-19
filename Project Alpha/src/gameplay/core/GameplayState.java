@@ -1,10 +1,11 @@
 package gameplay.core;
 
-import java.awt.Color;
-
+import gameplay.entities.player.Player;
 import gameplay.map.Map;
 import helper.Status;
 import helper.Text;
+
+import java.awt.Color;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -25,9 +26,10 @@ public class GameplayState extends BasicGameState {
 	private Text			watermark;
 	
 	private Map				map;
+	private Player			player;
 	
 	static {
-		MOVE_SPEED = 0.3f;
+		MOVE_SPEED = 0.1f;
 	}
 	
 	public GameplayState(int state) {
@@ -37,11 +39,13 @@ public class GameplayState extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 		watermark = new Text("Project PixelPotato " + Status.getProjectStatus(), "Walkway", "Bold", 20, Color.WHITE, 1000, 10);
 		map = new Map(1000);
+		player = new Player();
 	}
 	
 	public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
 		watermark.drawString();
 		map.drawMap();
+		player.draw();
 	}
 	
 	public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
@@ -57,12 +61,8 @@ public class GameplayState extends BasicGameState {
 		if (input.isKeyDown(Input.KEY_LEFT)) {
 			map.setxOff(map.getxOff() + MOVE_SPEED * delta);
 		}
-		if (input.isKeyDown(Input.KEY_UP)) {
-			map.setyOff(map.getyOff() + MOVE_SPEED * delta);
-		}
-		if (input.isKeyDown(Input.KEY_DOWN)) {
-			map.setyOff(map.getyOff() - MOVE_SPEED * delta);
-		}
+		float a = (float) (map.getxOff() / -200f);
+		gc.getGraphics().setBackground(new org.newdawn.slick.Color(a, a, a, 1f));
 	}
 	
 	public int getID() {
