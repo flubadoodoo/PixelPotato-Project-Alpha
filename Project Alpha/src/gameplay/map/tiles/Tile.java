@@ -14,7 +14,7 @@ public class Tile {
 		this.x = x;
 		this.y = y;
 		this.scale = scale;
-		image = new Image(IDP + ((scale == 13) ? "Tile 13.png" : (scale == 30) ? "Tile 30.png" : "Tile 64.png"));
+		image = new Image(IDP + ((scale == 29) ? "Tile 29.png" : (scale == 62) ? "Tile 62.png" : "Tile 128.png"));
 	}
 	
 	public void drawTileWithOffset(float xOff, float yOff) {

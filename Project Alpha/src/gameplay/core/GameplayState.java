@@ -61,8 +61,6 @@ public class GameplayState extends BasicGameState {
 		if (input.isKeyDown(Input.KEY_LEFT)) {
 			map.setxOff(map.getxOff() + MOVE_SPEED * delta);
 		}
-		float a = (float) (map.getxOff() / -200f);
-		gc.getGraphics().setBackground(new org.newdawn.slick.Color(a, a, a, 1f));
 	}
 	
 	public int getID() {

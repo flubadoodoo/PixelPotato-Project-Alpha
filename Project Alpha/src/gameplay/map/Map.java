@@ -9,36 +9,36 @@ import gameplay.map.tiles.Tile;
 
 public class Map {
 	
-	private float	xOff, yOff;
-	private Tile[]	tiles;
+	private float		xOff, yOff;
+	private Tile[]		tiles;
 	
 	// Temp vars
-	private int		width;
-	private int		SPACE;
-	private Random	random;
+	private int			width;
+	private int			SPACE;
+	private Random		random;
+	private HeightMap	heightMap;
 	
 	public Map(int width) throws SlickException {
 		xOff = 0;
 		yOff = 450;
 		setWidth(width);
-		SPACE = 4;
+		SPACE = 8;
 		random = new Random();
+		heightMap = new HeightMap(width);
 		setTiles(new Tile[width]);
-		initTiles();
+		initTiles(heightMap.getMap());
 	}
 	
-	private void initTiles() throws SlickException {
-		tiles[0] = new Tile(0, -64, 64);
+	private void initTiles(int[] heightMap) throws SlickException {
+		tiles[0] = new Tile(0, heightMap[0], getRandomTileScale());
 		for (int i = 1; i < tiles.length; i++) {
-			int size = random.nextInt(5);
-			if (size == 2 || size == 3)
-				size = 1;
-			if (size == 0 && size == 1)
-				size = 0;
-			if (size == 5)
-				size = 3;
-			tiles[i] = new Tile(tiles[i - 1].getX() + tiles[i - 1].getScale() + SPACE, (size == 0) ? -13 : (size == 1) ? -30 : -64, (size == 0) ? 13 : (size == 1) ? 30 : 64);
+			tiles[i] = new Tile(tiles[i - 1].getX() + tiles[i - 1].getScale() + SPACE, heightMap[i], getRandomTileScale());
 		}
+	}
+	
+	private int getRandomTileScale() {
+		int size = random.nextInt(8);
+		return (size == 0) ? 128 : (size == 1 || size == 2) ? 62 : 29;
 	}
 	
 	public void drawMap() {

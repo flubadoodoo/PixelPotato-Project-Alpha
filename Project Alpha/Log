@@ -1,4 +1,11 @@
 -----------
+Alpha 0.1.2
+-----------
+ - Changed size of tiles to 2x as big, changed space in between tiles to 8 pixels
+ - Added very basic height map algorithm (can go out of bounds)
+ - Map now generates based on height map
+  
+-----------
 Alpha 0.1.1
 -----------
  - Player gets draw at fixed x, y position, no physics
