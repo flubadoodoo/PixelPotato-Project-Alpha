@@ -1,4 +1,15 @@
 ------------
+Alpha 0.1.4b
+------------
+ - Changed the game's name to "Project PixelPotato" from "Simple Game"
+ - Changed resolution of tiles + color (now orange)
+ - Moved the "Project PixelPotato " out of GameplayState to the Status.getProjectStatus() string
+ - Gave the player class a y velocity, gave the map gravity
+ - Switched to Java rectangles from slick2D rectangles
+ - Collision detection now works
+ - Jumping is implemented
+
+------------
 Alpha 0.1.4a
 ------------
  - Changed the game's name to "Project PixelPotato" from "Simple Game"
