@@ -45,7 +45,7 @@ public class MainMenuState extends BasicGameState {
 	}
 	
 	public void init(GameContainer gc, StateBasedGame sg) throws SlickException {
-		watermark = new Text("Project PixelPotato" + Status.getProjectStatus(), "Walkway", "Bold", 20, Color.BLACK, 1000, 10);
+		watermark = new Text("Project PixelPotato " + Status.getProjectStatus(), "Walkway", "Bold", 20, Color.BLACK, 1000, 10);
 		background = new Image(IDP + "Main Menu Background.png");
 		
 		selectionIndex = 0;

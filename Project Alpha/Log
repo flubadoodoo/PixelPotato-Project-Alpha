@@ -1,9 +1,19 @@
 -----------
+Alpha 0.1.0
+-----------
+ - Can now go back from gameplay state to main menu state (backspace)
+ - A map class and player class was added
+ - The map randomly selects from 3 sizes of purple tiles (preferring the big one less)
+ - Can move the map around with arrow keys
+ - Bit of optimization (don't draw what's not on screen) --> Can draw 50,000 at stable 60 fps
+ - The player class does nothing
+  	
+-----------
 Alpha 0.0.1
 -----------
  - Added a gameplay state
  - Blank gameplay screen
- - Added a Status helper class to easily change the project status (change it in src/helper/Status)
+ - Added a Status helper class to easily change the project status (change it in src/helper/Version)
  
 -----------
 Alpha 0.0.0

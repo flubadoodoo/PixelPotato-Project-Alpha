@@ -30,7 +30,7 @@ public class Main extends StateBasedGame {
 		game.setVSync(true);
 		game.setMouseGrabbed(true);
 		game.setTargetFrameRate(60);
-		game.setShowFPS(false);
+		game.setShowFPS(true);
 		game.start();
 	}
 	
@@ -44,6 +44,7 @@ public class Main extends StateBasedGame {
 		this.addState(new SplashState(SPLASH_STATE));
 		this.addState(new MainMenuState(MAIN_MENU_STATE));
 		this.addState(new GameplayState(GAMEPLAY_STATE));
+		this.enterState(GAMEPLAY_STATE);
 	}
 	
 	public static int getMainMenuState() {
