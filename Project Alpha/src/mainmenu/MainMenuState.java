@@ -1,5 +1,6 @@
 package mainmenu;
 
+import helper.Status;
 import helper.Text;
 
 import java.awt.Color;
@@ -12,11 +13,15 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
+
+import core.Main;
 
 public class MainMenuState extends BasicGameState {
 	
-	private Text			text;
-	private Image			watermark;
+	private Text			watermark;
+	private Image			background;
 	
 	private int				selectionIndex;
 	
@@ -40,8 +45,8 @@ public class MainMenuState extends BasicGameState {
 	}
 	
 	public void init(GameContainer gc, StateBasedGame sg) throws SlickException {
-		text = new Text("Project PixelPotato Alpha 0.0.0", "Walkway", "Bold", 20, Color.BLACK, 1000, 10);
-		watermark = new Image(IDP + "Main Menu Background.png");
+		watermark = new Text("Project PixelPotato" + Status.getProjectStatus(), "Walkway", "Bold", 20, Color.BLACK, 1000, 10);
+		background = new Image(IDP + "Main Menu Background.png");
 		
 		selectionIndex = 0;
 		
@@ -54,8 +59,8 @@ public class MainMenuState extends BasicGameState {
 	}
 	
 	public void render(GameContainer gc, StateBasedGame sg, Graphics g) throws SlickException {
-		watermark.draw();
-		text.drawString();
+		background.draw();
+		watermark.drawString();
 		selectionArrow.draw(300, (selectionIndex == 0) ? 425 : (selectionIndex == 1) ? 500 : 575);
 		drawSelections();
 	}
@@ -66,7 +71,7 @@ public class MainMenuState extends BasicGameState {
 		optionsSelection[(selectionIndex == 2) ? 1 : 0].draw(150, 550);
 	}
 	
-	public void update(GameContainer gc, StateBasedGame sg, int delta) throws SlickException {
+	public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
 		Input input = gc.getInput();
 		if (input.isKeyPressed(Input.KEY_ESCAPE))
 			gc.exit();
@@ -77,6 +82,17 @@ public class MainMenuState extends BasicGameState {
 		if (input.isKeyPressed(Input.KEY_UP)) {
 			if (selectionIndex > 0)
 				selectionIndex--;
+		}
+		if (input.isKeyPressed(Input.KEY_ENTER)) {
+			switch (selectionIndex) {
+			case 0:
+				game.enterState(Main.getGameplayState(), new FadeOutTransition(), new FadeInTransition());
+				break;
+			case 1:
+				break;
+			case 2:
+				break;
+			}
 		}
 		selectionArrow.update(delta);
 	}
