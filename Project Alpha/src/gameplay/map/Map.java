@@ -6,6 +6,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
 import org.lwjgl.opengl.Display;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 public class Map {
@@ -19,6 +20,7 @@ public class Map {
 	private Random		random;
 	private HeightMap	heightMap;
 	private double		gravity;
+	private Image[]		tileImages;
 	
 	public Map(int width) throws SlickException {
 		xOff = 0;
@@ -30,6 +32,7 @@ public class Map {
 		heightMap = new HeightMap(width);
 		setTiles(new Tile[width]);
 		initTiles(heightMap.getMap());
+		tileImages = new Image[] { new Image("gameplay/map/tiles/Tile 29.png"), new Image("gameplay/map/tiles/Tile 62.png"), new Image("gameplay/map/tiles/Tile 128.png") };
 	}
 	
 	private void initTiles(int[] heightMap) throws SlickException {
@@ -51,7 +54,7 @@ public class Map {
 	public void drawMap() {
 		for (int i = 0; i < tiles.length; i++) {
 			if (isOnMap(tiles[i]))
-				tiles[i].drawTile((float) xOff, (float) yOff);
+				tileImages[(tiles[i].getScale() == 29) ? 0 : (tiles[i].getScale() == 62) ? 1 : 2].draw((float) (tiles[i].getX() + xOff), (float) (tiles[i].getY() + yOff));
 		}
 	}
 	
@@ -113,6 +116,14 @@ public class Map {
 	
 	public void setGravity(double gravity) {
 		this.gravity = gravity;
+	}
+	
+	public Image[] getTileImages() {
+		return tileImages;
+	}
+	
+	public void setTileImages(Image[] tileImages) {
+		this.tileImages = tileImages;
 	}
 	
 }

@@ -32,6 +32,7 @@ public class MainMenuState extends BasicGameState {
 	private Image[]			soloSelection;
 	private Image[]			coopSelection;
 	private Image[]			optionsSelection;
+	private Image[]			levelEditorSelection;
 	
 	private static int		STATE;
 	private static String	IDP;
@@ -58,19 +59,21 @@ public class MainMenuState extends BasicGameState {
 		soloSelection = new Image[] { new Image(IDP + "selections/Solo Deselected.png"), new Image(IDP + "selections/Solo Selected.png") };
 		coopSelection = new Image[] { new Image(IDP + "selections/Coop Deselected.png"), new Image(IDP + "selections/Coop Selected.png") };
 		optionsSelection = new Image[] { new Image(IDP + "selections/Options Deselected.png"), new Image(IDP + "selections/Options Selected.png") };
+		levelEditorSelection = new Image[] { new Image(IDP + "selections/Level Editor Deselected.png"), new Image(IDP + "selections/Level Editor Selected.png") };
 	}
 	
 	public void render(GameContainer gc, StateBasedGame sg, Graphics g) throws SlickException {
 		background.draw();
 		watermark.drawString();
-		selectionArrow.draw(300, (selectionIndex == 0) ? 425 : (selectionIndex == 1) ? 500 : 575);
+		selectionArrow.draw(325, (selectionIndex == 0) ? 350 : (selectionIndex == 1) ? 425 : (selectionIndex == 2) ? 500 : 575);
 		drawSelections();
 	}
 	
 	private void drawSelections() {
-		soloSelection[(selectionIndex == 0) ? 1 : 0].draw(211, 400);
-		coopSelection[(selectionIndex == 1) ? 1 : 0].draw(198, 475);
-		optionsSelection[(selectionIndex == 2) ? 1 : 0].draw(150, 550);
+		soloSelection[(selectionIndex == 0) ? 1 : 0].draw(236, 325);
+		coopSelection[(selectionIndex == 1) ? 1 : 0].draw(223, 400);
+		optionsSelection[(selectionIndex == 2) ? 1 : 0].draw(175, 475);
+		levelEditorSelection[(selectionIndex == 3) ? 1 : 0].draw(25, 550);
 	}
 	
 	public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
@@ -78,7 +81,7 @@ public class MainMenuState extends BasicGameState {
 		if (input.isKeyPressed(Input.KEY_ESCAPE))
 			gc.exit();
 		if (input.isKeyPressed(Input.KEY_DOWN)) {
-			if (selectionIndex < 2)
+			if (selectionIndex < 3)
 				selectionIndex++;
 		}
 		if (input.isKeyPressed(Input.KEY_UP)) {
@@ -93,6 +96,9 @@ public class MainMenuState extends BasicGameState {
 			case 1:
 				break;
 			case 2:
+				break;
+			case 3:
+				game.enterState(Main.getLevelEditorState(), new FadeOutTransition(), new FadeInTransition());
 				break;
 			}
 		}

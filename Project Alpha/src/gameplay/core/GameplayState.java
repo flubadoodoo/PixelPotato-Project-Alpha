@@ -43,6 +43,7 @@ public class GameplayState extends BasicGameState {
 	}
 	
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
+		gc.getGraphics().setClip(0, 0, Display.getWidth(), Display.getHeight());
 		watermark = new Text(Status.getProjectStatus(), "Walkway", "Bold", 20, Color.WHITE, 0, 10);
 		watermark.setX(Display.getWidth() - watermark.getWidth() - 10);
 		map = new Map(1000);

@@ -1,4 +1,15 @@
 -----------
+Alpha 0.1.6
+-----------
+ - Added LevelEditorState
+ - Changed the way the map renders, now draws tiles in Map class, Tile class no longer has images (50,000 tiles at 60 fps, greatly reduces memory usage)
+ - Level editor draws a grid with spacing and an origin
+ - Added an LETile
+ - BUG (Obvious): Jumping/Gravity doesn't take into account delta
+ - BUG (Obvious): Now because of above optimization, splash screen is messed up, enters main menu state too quickly
+ - Goal: Start work on level editor, work with i.o
+
+-----------
 Alpha 0.1.5
 -----------
  - Fixed bug: Map's yOff was not added to first tile (tile[0])'s bounding box
@@ -7,7 +18,7 @@ Alpha 0.1.5
  - Added player walking and general movement state
  - Changed player sprite to correspond with walking state
  - Need to fix player animation (Currently just keeps running)
- - BUG: Hitting the side of a tile while going down causes the player to go through the floor
+ - BUG (Reproducible): Hitting the side of a tile while going down causes the player to go through the floor
 
 ------------
 Alpha 0.1.4b
