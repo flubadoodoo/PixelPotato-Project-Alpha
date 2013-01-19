@@ -33,6 +33,7 @@ public class Map {
 		tiles[0] = new Tile(0, heightMap[0], getRandomTileScale());
 		for (int i = 1; i < tiles.length; i++) {
 			tiles[i] = new Tile(tiles[i - 1].getX() + tiles[i - 1].getScale() + SPACE, heightMap[i], getRandomTileScale());
+			tiles[i].getBounds().setY(tiles[i].getBounds().getY() + yOff);
 		}
 	}
 	
@@ -44,7 +45,7 @@ public class Map {
 	public void drawMap() {
 		for (int i = 0; i < tiles.length; i++) {
 			if (isOnMap(tiles[i]))
-				tiles[i].drawTileWithOffset(xOff, yOff);
+				tiles[i].drawTile(xOff, yOff);
 		}
 	}
 	
@@ -68,6 +69,13 @@ public class Map {
 	
 	public void setxOff(float xOff) {
 		this.xOff = xOff;
+	}
+	
+	public void incrementXOff(float amount) {
+		xOff += amount;
+		for (int i = 0; i < tiles.length; i++) {
+			tiles[i].incrementX(amount);
+		}
 	}
 	
 	public Tile[] getTiles() {

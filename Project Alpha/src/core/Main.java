@@ -7,6 +7,7 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.util.Log;
 
 import splash.SplashState;
 
@@ -26,11 +27,12 @@ public class Main extends StateBasedGame {
 	// Main
 	public static void main(String[] args) throws SlickException {
 		AppGameContainer game = new AppGameContainer(new Main("Simple Game"));
-		game.setDisplayMode(1280, 720, true);
+		game.setDisplayMode(1280, 720, false);
 		game.setVSync(true);
 		game.setMouseGrabbed(true);
 		game.setTargetFrameRate(60);
 		game.setShowFPS(true);
+		Log.setVerbose(false);
 		game.start();
 	}
 	

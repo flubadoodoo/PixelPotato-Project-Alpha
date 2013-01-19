@@ -56,10 +56,10 @@ public class GameplayState extends BasicGameState {
 			game.enterState(Main.getMainMenuState(), new FadeOutTransition(), new FadeInTransition());
 		}
 		if (input.isKeyDown(Input.KEY_RIGHT)) {
-			map.setxOff(map.getxOff() - MOVE_SPEED * delta);
+			map.incrementXOff(-MOVE_SPEED * delta);
 		}
 		if (input.isKeyDown(Input.KEY_LEFT)) {
-			map.setxOff(map.getxOff() + MOVE_SPEED * delta);
+			map.incrementXOff(MOVE_SPEED * delta);
 		}
 	}
 	
