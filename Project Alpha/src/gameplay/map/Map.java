@@ -1,11 +1,11 @@
 package gameplay.map;
 
+import gameplay.map.tiles.Tile;
+
 import java.util.Random;
 
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.SlickException;
-
-import gameplay.map.tiles.Tile;
 
 public class Map {
 	
@@ -20,9 +20,9 @@ public class Map {
 	
 	public Map(int width) throws SlickException {
 		xOff = 0;
-		yOff = 450;
+		yOff = 500;
 		setWidth(width);
-		SPACE = 8;
+		setSPACE(8);
 		random = new Random();
 		heightMap = new HeightMap(width);
 		setTiles(new Tile[width]);
@@ -32,8 +32,8 @@ public class Map {
 	private void initTiles(int[] heightMap) throws SlickException {
 		tiles[0] = new Tile(0, heightMap[0], getRandomTileScale());
 		for (int i = 1; i < tiles.length; i++) {
-			tiles[i] = new Tile(tiles[i - 1].getX() + tiles[i - 1].getScale() + SPACE, heightMap[i], getRandomTileScale());
-			tiles[i].getBounds().setY(tiles[i].getBounds().getY() + yOff);
+			tiles[i] = new Tile(tiles[i - 1].getX() + tiles[i - 1].getScale() + getSPACE(), heightMap[i], getRandomTileScale());
+			tiles[i].getBounds().setLocation((int) tiles[i].getBounds().getLocation().getX(), (int) (tiles[i].getBounds().getY() + yOff));
 		}
 	}
 	
@@ -71,10 +71,17 @@ public class Map {
 		this.xOff = xOff;
 	}
 	
-	public void incrementXOff(float amount) {
-		xOff += amount;
+	public void incrementXOff(double d) {
+		xOff += d;
 		for (int i = 0; i < tiles.length; i++) {
-			tiles[i].incrementX(amount);
+			tiles[i].incrementX(d);
+		}
+	}
+	
+	public void incrementYOff(double d) {
+		yOff += d;
+		for (int i = 0; i < tiles.length; i++) {
+			tiles[i].incrementY(d);
 		}
 	}
 	
@@ -92,6 +99,14 @@ public class Map {
 	
 	public void setWidth(int width) {
 		this.width = width;
+	}
+	
+	public int getSPACE() {
+		return SPACE;
+	}
+	
+	public void setSPACE(int sPACE) {
+		SPACE = sPACE;
 	}
 	
 }

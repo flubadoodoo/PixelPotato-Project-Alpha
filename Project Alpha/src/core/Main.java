@@ -26,7 +26,7 @@ public class Main extends StateBasedGame {
 	
 	// Main
 	public static void main(String[] args) throws SlickException {
-		AppGameContainer game = new AppGameContainer(new Main("Simple Game"));
+		AppGameContainer game = new AppGameContainer(new Main("Project PixelPotato"));
 		game.setDisplayMode(1280, 720, false);
 		game.setVSync(true);
 		game.setMouseGrabbed(true);

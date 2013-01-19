@@ -1,8 +1,9 @@
 package gameplay.map.tiles;
 
+import java.awt.Rectangle;
+
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Rectangle;
 
 public class Tile {
 	
@@ -17,7 +18,8 @@ public class Tile {
 		this.y = y;
 		this.scale = scale;
 		image = new Image(IDP + ((scale == 29) ? "Tile 29.png" : (scale == 62) ? "Tile 62.png" : "Tile 128.png"));
-		setBounds(new Rectangle(x, y, scale, scale));
+		setBounds(new Rectangle(scale, scale));
+		bounds.setLocation((int) x, (int) y);
 	}
 	
 	public void drawTile(float xOff, float yOff) {
@@ -58,9 +60,12 @@ public class Tile {
 		this.bounds = bounds;
 	}
 	
-	public void incrementX(float amount) {
-		//x += amount;
-		bounds.setX(bounds.getX() + amount);
+	public void incrementX(double amount) {
+		bounds.setLocation((int) (bounds.getX() + amount), (int) bounds.getLocation().getY());
+	}
+	
+	public void incrementY(double d) {
+		bounds.setLocation((int) bounds.getLocation().getX(), (int) (bounds.getY() + d));
 	}
 	
 }
