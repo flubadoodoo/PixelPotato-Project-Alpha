@@ -9,11 +9,11 @@ import org.newdawn.slick.font.effects.ColorEffect;
 public class Text {
 	
 	private UnicodeFont	text;
-	private int			x, y;
+	private double		x, y;
 	private String		string;
 	
 	@SuppressWarnings("unchecked")
-	public Text(String string, String fontName, String fontType, int size, Color color, int x, int y) throws SlickException {
+	public Text(String string, String fontName, String fontType, int size, Color color, double x, double y) throws SlickException {
 		text = new UnicodeFont("fonts/" + fontName + "/" + fontType + ".ttf", size, false, false);
 		text.getEffects().add(new ColorEffect(color));
 		text.addAsciiGlyphs();
@@ -24,7 +24,7 @@ public class Text {
 	}
 	
 	public void drawString() {
-		text.drawString(x, y, string);
+		text.drawString((int) x, (int) y, string);
 	}
 	
 	public void setString(String string) {
@@ -35,11 +35,27 @@ public class Text {
 		return text.getWidth(string);
 	}
 	
-	public void setX(int x) {
+	public int getHeight() {
+		return text.getHeight(string);
+	}
+	
+	public void setX(double x) {
 		this.x = x;
 	}
 	
-	public void setY(int y) {
+	public double getX() {
+		return x;
+	}
+	
+	public void setY(double y) {
 		this.y = y;
+	}
+	
+	public double getY() {
+		return y;
+	}
+	
+	public void incrementY(double amount) {
+		y += amount;
 	}
 }

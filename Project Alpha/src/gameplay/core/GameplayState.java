@@ -3,6 +3,7 @@ package gameplay.core;
 import gameplay.entities.player.Player;
 import gameplay.map.Map;
 import gameplay.map.tiles.Tile;
+import gameplay.notification.NotificationCenter;
 import helper.Status;
 import helper.Text;
 
@@ -24,14 +25,16 @@ import core.Main;
 
 public class GameplayState extends BasicGameState {
 	
-	private static int		STATE;
-	private static double	MOVE_SPEED;
-	private static double	JUMP_STRENGTH;
+	private static int			STATE;
+	private static double		MOVE_SPEED;
+	private static double		JUMP_STRENGTH;
 	
-	private Text			watermark;
+	private Text				watermark;
 	
-	private Map				map;
-	private Player			player;
+	private NotificationCenter	notificationCenter;
+	
+	private Map					map;
+	private Player				player;
 	
 	static {
 		JUMP_STRENGTH = -20.0;
@@ -46,14 +49,17 @@ public class GameplayState extends BasicGameState {
 		gc.getGraphics().setClip(0, 0, Display.getWidth(), Display.getHeight());
 		watermark = new Text(Status.getProjectStatus(), "Walkway", "Bold", 20, Color.WHITE, 0, 10);
 		watermark.setX(Display.getWidth() - watermark.getWidth() - 10);
+		notificationCenter = new NotificationCenter();
 		map = new Map(1000);
 		player = new Player();
+		notificationCenter.addNotification("Testing 1 ... 2 ... 3");
 	}
 	
 	public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
 		watermark.drawString();
 		map.drawMap();
 		player.draw();
+		notificationCenter.draw();
 		//drawBoundingBoxes(g);
 	}
 	
@@ -73,6 +79,7 @@ public class GameplayState extends BasicGameState {
 		map.incrementYOff(player.getyVel());
 		handleCollisions(player.getBoundingBox(), map.getTiles(), delta);
 		player.update(delta);
+		notificationCenter.update(delta);
 	}
 	
 	private void handleCollisions(Rectangle2D boundingBox, Tile[] tiles, int delta) {
@@ -103,7 +110,7 @@ public class GameplayState extends BasicGameState {
 		}
 	}
 	
-	private void handleInput(Input input, GameContainer gc, StateBasedGame game, int delta) {
+	private void handleInput(Input input, GameContainer gc, StateBasedGame game, int delta) throws SlickException {
 		if (input.isKeyPressed(Input.KEY_ESCAPE))
 			gc.exit();
 		if (input.isKeyPressed(Input.KEY_BACK)) {
@@ -130,6 +137,9 @@ public class GameplayState extends BasicGameState {
 				player.setMovementState(Player.PLAYER_MOVEMENT_STATE.Jumping);
 			}
 		}
+		if (input.isKeyPressed(Input.KEY_N)) {
+			notificationCenter.addNotification("" + gc.getTime());
+		}
 		map.incrementXOff(player.getxVel());
 	}
 	
@@ -139,6 +149,14 @@ public class GameplayState extends BasicGameState {
 	
 	public int getID() {
 		return STATE;
+	}
+	
+	public NotificationCenter getNotificationCenter() {
+		return notificationCenter;
+	}
+	
+	public void setNotificationCenter(NotificationCenter notificationCenter) {
+		this.notificationCenter = notificationCenter;
 	}
 	
 }
