@@ -98,8 +98,8 @@ public class GameplayState extends BasicGameState {
 		}
 		if (fall) {
 			player.incrementyVel(map.getGravity());
-			//if (player.getMovementState() != Player.PLAYER_MOVEMENT_STATE.Jumping)
-			//player.setMovementState(Player.PLAYER_MOVEMENT_STATE.Jumping);
+			if (player.getMovementState() != Player.PLAYER_MOVEMENT_STATE.Jumping)
+				player.setMovementState(Player.PLAYER_MOVEMENT_STATE.Jumping);
 		}
 	}
 	
