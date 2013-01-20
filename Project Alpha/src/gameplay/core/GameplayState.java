@@ -34,8 +34,8 @@ public class GameplayState extends BasicGameState {
 	private Player			player;
 	
 	static {
-		MOVE_SPEED = 0.25;
 		JUMP_STRENGTH = -20.0;
+		MOVE_SPEED = 0.01;
 	}
 	
 	public GameplayState(int state) {
@@ -87,17 +87,19 @@ public class GameplayState extends BasicGameState {
 						map.incrementYOff(overlap.getHeight());
 						player.setyVel(0.0);
 						fall = false;
-						if (player.getMovementState() != Player.PLAYER_MOVEMENT_STATE.Walking)
-							player.setMovementState(Player.PLAYER_MOVEMENT_STATE.Walking);
+						if (player.getMovementState() == Player.PLAYER_MOVEMENT_STATE.Jumping)
+							player.setMovementState(Player.PLAYER_MOVEMENT_STATE.Standing);
 					} else {
 						map.incrementXOff(xO);
+						player.setxVel(0.0);
 					}
 				}
 			}
 		}
-		// Isn't in the for loop
 		if (fall) {
 			player.incrementyVel(map.getGravity());
+			//if (player.getMovementState() != Player.PLAYER_MOVEMENT_STATE.Jumping)
+			//player.setMovementState(Player.PLAYER_MOVEMENT_STATE.Jumping);
 		}
 	}
 	
@@ -108,14 +110,19 @@ public class GameplayState extends BasicGameState {
 			game.enterState(Main.getMainMenuState(), new FadeOutTransition(), new FadeInTransition());
 		}
 		if (input.isKeyDown(Input.KEY_D)) {
-			map.incrementXOff(-MOVE_SPEED * delta);
+			player.incrementxVel(-MOVE_SPEED * delta);
 			if (player.getWalkingState() != Player.PLAYER_WALKING_STATE.Right)
 				player.setWalkingState(Player.PLAYER_WALKING_STATE.Right);
 		}
 		if (input.isKeyDown(Input.KEY_A)) {
-			map.incrementXOff(MOVE_SPEED * delta);
+			player.incrementxVel(MOVE_SPEED * delta);
 			if (player.getWalkingState() != Player.PLAYER_WALKING_STATE.Left)
 				player.setWalkingState(Player.PLAYER_WALKING_STATE.Left);
+		}
+		if (!input.isKeyDown(Input.KEY_D) && !input.isKeyDown(Input.KEY_A)) {
+			player.setxVel(player.getxVel() * 0.89);
+			if (player.getxVel() < 0.001 && player.getxVel() > -0.001)
+				player.setxVel(0.0);
 		}
 		if (player.getMovementState() != Player.PLAYER_MOVEMENT_STATE.Jumping) {
 			if (input.isKeyDown(Input.KEY_W)) {
@@ -123,6 +130,7 @@ public class GameplayState extends BasicGameState {
 				player.setMovementState(Player.PLAYER_MOVEMENT_STATE.Jumping);
 			}
 		}
+		map.incrementXOff(player.getxVel());
 	}
 	
 	private boolean isOnScreen(Tile tile) {

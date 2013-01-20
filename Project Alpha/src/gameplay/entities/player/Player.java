@@ -16,6 +16,7 @@ public class Player {
 	private Image[]				sprites;
 	private Rectangle2D			boundingBox;
 	private double				yVel;
+	private double				xVel;
 	
 	public enum PLAYER_MOVEMENT_STATE {
 		Standing, Walking, Jumping
@@ -47,7 +48,7 @@ public class Player {
 		x = Display.getWidth() / 2 - sprites[0].getWidth() / 2;
 		y = Display.getHeight() / 2 - sprites[0].getHeight() / 2;
 		boundingBox = new Rectangle.Double(x, y, sprites[0].getWidth(), sprites[0].getHeight());
-		setMovementState(PLAYER_MOVEMENT_STATE.Jumping);
+		setMovementState(PLAYER_MOVEMENT_STATE.Standing);
 		setWalkingState(PLAYER_WALKING_STATE.Right);
 	}
 	
@@ -131,6 +132,19 @@ public class Player {
 	
 	public void setLeftWalking(Animation leftWalking) {
 		this.leftWalking = leftWalking;
+	}
+	
+	public double getxVel() {
+		return xVel;
+	}
+	
+	public void incrementxVel(double amount) {
+		setxVel(getxVel() + amount);
+	}
+	
+	public void setxVel(double xVel) {
+		if (xVel >= -3.0 && xVel <= 3.0)
+			this.xVel = xVel;
 	}
 	
 }
