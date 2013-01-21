@@ -1,5 +1,7 @@
 package gameplay.entities.player;
 
+import gameplay.entities.weapon.gun.AutomaticGun;
+
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 
@@ -10,13 +12,16 @@ import org.newdawn.slick.SlickException;
 
 public class Player {
 	
-	private static double		x, y;
+	private static double	x, y;
+	private static final double	weaponX, weaponY;
 	private static final String	IDP;
 	
 	private Image[]				sprites;
 	private Rectangle2D			boundingBox;
 	private double				yVel;
 	private double				xVel;
+	
+	private AutomaticGun		gun;
 	
 	public enum PLAYER_MOVEMENT_STATE {
 		Standing, Walking, Jumping
@@ -35,6 +40,8 @@ public class Player {
 	
 	static {
 		IDP = "gameplay/entities/player/sprites/";
+		weaponX = Display.getWidth() / 2;
+		weaponY = Display.getHeight() / 2;
 	}
 	
 	public Player() throws SlickException {
@@ -50,6 +57,7 @@ public class Player {
 		boundingBox = new Rectangle.Double(x, y, sprites[0].getWidth(), sprites[0].getHeight());
 		setMovementState(PLAYER_MOVEMENT_STATE.Standing);
 		setWalkingState(PLAYER_WALKING_STATE.Right);
+		gun = new AutomaticGun(30, 0.1);
 	}
 	
 	private Image newImage(String name) throws SlickException {
@@ -61,9 +69,10 @@ public class Player {
 			rightWalking.draw((float) x, (float) y);
 		else if (getWalkingState() == PLAYER_WALKING_STATE.Left)
 			leftWalking.draw((float) x, (float) y);
+		gun.draw();
 	}
 	
-	public void update(int delta) {
+	public void update(int delta, double deltaX, double deltaY) {
 		if (getMovementState() == PLAYER_MOVEMENT_STATE.Walking) {
 			if (getWalkingState() == PLAYER_WALKING_STATE.Right) {
 				rightWalking.update(delta);
@@ -71,6 +80,15 @@ public class Player {
 				leftWalking.update(delta);
 			}
 		}
+		gun.update(delta, deltaX, deltaY);
+	}
+	
+	public void updateMovement(double x, double y) {
+		
+	}
+	
+	public void shoot(double angle) {
+		gun.shoot(angle);
 	}
 	
 	public static double getY() {
@@ -145,6 +163,22 @@ public class Player {
 	public void setxVel(double xVel) {
 		if (xVel >= -3.0 && xVel <= 3.0)
 			this.xVel = xVel;
+	}
+	
+	public static double getWeaponX() {
+		return weaponX;
+	}
+	
+	public static double getWeaponY() {
+		return weaponY;
+	}
+	
+	public AutomaticGun getGun() {
+		return gun;
+	}
+	
+	public void setGun(AutomaticGun gun) {
+		this.gun = gun;
 	}
 	
 }

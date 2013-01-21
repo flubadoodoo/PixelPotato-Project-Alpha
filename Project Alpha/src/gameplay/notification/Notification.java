@@ -26,10 +26,10 @@ public class Notification {
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		this.setMessageX(x + (width / 2 - messageWidth / 2));
-		this.setMessageY(y - (height / 3) - (height / 2 - messageHeight) / 2);
 		this.messageWidth = messageWidth;
 		this.messageHeight = messageHeight;
+		this.setMessageX(x + (width / 2 - messageWidth / 2));
+		this.setMessageY((y - height) + (height / 2 - messageHeight / 2));
 		life = 0;
 	}
 	
@@ -135,11 +135,11 @@ public class Notification {
 	public void setMessageY(double messageY) {
 		this.messageY = messageY;
 	}
-
+	
 	public String getMessage() {
 		return message;
 	}
-
+	
 	public void setMessage(String message) {
 		this.message = message;
 	}

@@ -16,6 +16,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
@@ -36,6 +37,10 @@ public class GameplayState extends BasicGameState {
 	private Map					map;
 	private Player				player;
 	
+	//	private Shape							test;
+	//	private org.newdawn.slick.geom.Polygon	testg;
+	//	private Shape							rotated;
+	
 	static {
 		JUMP_STRENGTH = -20.0;
 		MOVE_SPEED = 0.01;
@@ -53,6 +58,24 @@ public class GameplayState extends BasicGameState {
 		map = new Map(1000);
 		player = new Player();
 		notificationCenter.addNotification("Testing 1 ... 2 ... 3");
+		/*int[] x = new int[] { 500, 600, 600, 500 };
+		int[] y = new int[] { 510, 510, 600, 600 };
+		test = new Polygon(x, y, 4);
+		AffineTransform a = new AffineTransform();
+		a.rotate(Math.toRadians(15), test.getBounds().getCenterX(), test.getBounds().getCenterY());
+		rotated = a.createTransformedShape(test);
+		testg = new org.newdawn.slick.geom.Polygon();
+		PathIterator p = rotated.getPathIterator(null);
+		while (!p.isDone()) {
+			float[] coords = new float[6];
+			int t = p.currentSegment(coords);
+			System.out.println(coords[0] + ", " + coords[1]);
+			testg.addPoint(coords[0], coords[1]);
+			if (testg.getPointCount() == 4) {
+				break;
+			}
+			p.next();
+		}*/
 	}
 	
 	public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
@@ -61,6 +84,8 @@ public class GameplayState extends BasicGameState {
 		player.draw();
 		notificationCenter.draw();
 		//drawBoundingBoxes(g);
+		//g.setColor(new org.newdawn.slick.Color(0f, 1f, 0f, 1f));
+		//g.draw(testg);
 	}
 	
 	@SuppressWarnings("unused")
@@ -75,10 +100,12 @@ public class GameplayState extends BasicGameState {
 	}
 	
 	public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
+		double xOffp = map.getxOff();
+		double yOffp = map.getyOff();
 		handleInput(gc.getInput(), gc, game, delta);
 		map.incrementYOff(player.getyVel());
 		handleCollisions(player.getBoundingBox(), map.getTiles(), delta);
-		player.update(delta);
+		player.update(delta, map.getxOff() - xOffp, map.getyOff() - yOffp);
 		notificationCenter.update(delta);
 	}
 	
@@ -101,6 +128,9 @@ public class GameplayState extends BasicGameState {
 						player.setxVel(0.0);
 					}
 				}
+				/*if (rotated.intersects(tile.getBoundingBox())) {
+					System.out.println("IT'S !@*%$# INTERSECTING!!!!");
+				}*/
 			}
 		}
 		if (fall) {
@@ -139,6 +169,9 @@ public class GameplayState extends BasicGameState {
 		}
 		if (input.isKeyPressed(Input.KEY_N)) {
 			notificationCenter.addNotification("" + gc.getTime());
+		}
+		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+			player.shoot(Math.toRadians(((new Vector2f((float) (input.getMouseX() - Player.getWeaponX()), (float) (input.getMouseY() - Player.getWeaponY())))).getTheta()));
 		}
 		map.incrementXOff(player.getxVel());
 	}
