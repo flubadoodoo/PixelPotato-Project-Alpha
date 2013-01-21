@@ -7,6 +7,9 @@ import org.newdawn.slick.SlickException;
 
 public class AutomaticGun {
 	
+	private static int			bulletWidth;
+	private static int			bulletHeight;
+	
 	private int					clipSize;
 	private int					roundsInClip;
 	private ArrayList<Bullet>	bullets;
@@ -18,11 +21,14 @@ public class AutomaticGun {
 		this.firingVelocity = firingVelocity;
 		bullets = new ArrayList<Bullet>();
 		setBulletImage(new Image("gameplay/entities/weapon/gun/Bullet.png"));
+		setBulletWidth(bulletImage.getWidth());
+		setBulletHeight(bulletImage.getHeight());
 	}
 	
 	public void update(int delta, double deltaX, double deltaY) {
 		for (int i = 0; i < bullets.size(); i++) {
 			bullets.get(i).translateDelta(firingVelocity * Math.cos(bullets.get(i).getAngle()) * delta + deltaX, firingVelocity * Math.sin(bullets.get(i).getAngle()) * delta + deltaY);
+			bullets.get(i).getBounds().getBounds().translate((int) deltaX, (int) deltaY);
 		}
 	}
 	
@@ -84,6 +90,22 @@ public class AutomaticGun {
 	
 	public void setBulletImage(Image bulletImage) {
 		this.bulletImage = bulletImage;
+	}
+	
+	public static int getBulletWidth() {
+		return bulletWidth;
+	}
+	
+	public static void setBulletWidth(int bulletWidth) {
+		AutomaticGun.bulletWidth = bulletWidth;
+	}
+	
+	public static int getBulletHeight() {
+		return bulletHeight;
+	}
+	
+	public static void setBulletHeight(int bulletHeight) {
+		AutomaticGun.bulletHeight = bulletHeight;
 	}
 	
 }

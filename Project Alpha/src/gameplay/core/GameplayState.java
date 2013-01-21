@@ -57,7 +57,7 @@ public class GameplayState extends BasicGameState {
 		notificationCenter = new NotificationCenter();
 		map = new Map(1000);
 		player = new Player();
-		notificationCenter.addNotification("Testing 1 ... 2 ... 3");
+		notificationCenter.addNotification("Game started");
 		/*int[] x = new int[] { 500, 600, 600, 500 };
 		int[] y = new int[] { 510, 510, 600, 600 };
 		test = new Polygon(x, y, 4);
@@ -128,9 +128,11 @@ public class GameplayState extends BasicGameState {
 						player.setxVel(0.0);
 					}
 				}
-				/*if (rotated.intersects(tile.getBoundingBox())) {
-					System.out.println("IT'S !@*%$# INTERSECTING!!!!");
-				}*/
+				for (int i = 0; i < player.getGun().getBullets().size(); i++) {
+					if (player.getGun().getBullets().get(i).getBounds().intersects(tile.getBoundingBox())) {
+						player.getGun().getBullets().remove(i);
+					}
+				}
 			}
 		}
 		if (fall) {

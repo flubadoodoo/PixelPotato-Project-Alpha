@@ -57,7 +57,7 @@ public class Player {
 		boundingBox = new Rectangle.Double(x, y, sprites[0].getWidth(), sprites[0].getHeight());
 		setMovementState(PLAYER_MOVEMENT_STATE.Standing);
 		setWalkingState(PLAYER_WALKING_STATE.Right);
-		gun = new AutomaticGun(30, 0.1);
+		gun = new AutomaticGun(30, 1);
 	}
 	
 	private Image newImage(String name) throws SlickException {
