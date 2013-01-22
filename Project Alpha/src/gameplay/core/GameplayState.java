@@ -26,16 +26,16 @@ import core.Main;
 
 public class GameplayState extends BasicGameState {
 	
-	private static int			STATE;
-	private static double		MOVE_SPEED;
-	private static double		JUMP_STRENGTH;
+	private static int					STATE;
+	private static double				MOVE_SPEED;
+	private static double				JUMP_STRENGTH;
 	
-	private Text				watermark;
+	private Text						watermark;
 	
-	private NotificationCenter	notificationCenter;
+	private static NotificationCenter	notificationCenter;
 	
-	private Map					map;
-	private Player				player;
+	private Map							map;
+	private Player						player;
 	
 	//	private Shape							test;
 	//	private org.newdawn.slick.geom.Polygon	testg;
@@ -172,8 +172,11 @@ public class GameplayState extends BasicGameState {
 		if (input.isKeyPressed(Input.KEY_N)) {
 			notificationCenter.addNotification("" + gc.getTime());
 		}
-		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+		if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
 			player.shoot(Math.toRadians(((new Vector2f((float) (input.getMouseX() - Player.getWeaponX()), (float) (input.getMouseY() - Player.getWeaponY())))).getTheta()));
+		}
+		if (input.isKeyPressed(Input.KEY_R)) {
+			player.reload();
 		}
 		map.incrementXOff(player.getxVel());
 	}
@@ -186,12 +189,12 @@ public class GameplayState extends BasicGameState {
 		return STATE;
 	}
 	
-	public NotificationCenter getNotificationCenter() {
+	public static NotificationCenter getNotificationCenter() {
 		return notificationCenter;
 	}
 	
-	public void setNotificationCenter(NotificationCenter notificationCenter) {
-		this.notificationCenter = notificationCenter;
+	public static void setNotificationCenter(NotificationCenter notificationCenter) {
+		GameplayState.notificationCenter = notificationCenter;
 	}
 	
 }

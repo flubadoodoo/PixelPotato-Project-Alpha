@@ -57,7 +57,7 @@ public class Player {
 		boundingBox = new Rectangle.Double(x, y, sprites[0].getWidth(), sprites[0].getHeight());
 		setMovementState(PLAYER_MOVEMENT_STATE.Standing);
 		setWalkingState(PLAYER_WALKING_STATE.Right);
-		gun = new AutomaticGun(30, 1);
+		gun = new AutomaticGun(30, 1, 10);
 	}
 	
 	private Image newImage(String name) throws SlickException {
@@ -87,8 +87,12 @@ public class Player {
 		
 	}
 	
-	public void shoot(double angle) {
+	public void shoot(double angle) throws SlickException {
 		gun.shoot(angle);
+	}
+	
+	public void reload() {
+		gun.reload();
 	}
 	
 	public static double getY() {
