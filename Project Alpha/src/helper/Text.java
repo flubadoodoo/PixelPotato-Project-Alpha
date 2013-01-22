@@ -1,7 +1,6 @@
 package helper;
 
-import java.awt.Color;
-
+import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
@@ -11,11 +10,13 @@ public class Text {
 	private UnicodeFont	text;
 	private double		x, y;
 	private String		string;
+	private Color		color;
 	
 	@SuppressWarnings("unchecked")
 	public Text(String string, String fontName, String fontType, int size, Color color, double x, double y) throws SlickException {
+		this.color = color;
 		text = new UnicodeFont("fonts/" + fontName + "/" + fontType + ".ttf", size, false, false);
-		text.getEffects().add(new ColorEffect(color));
+		text.getEffects().add(new ColorEffect());
 		text.addAsciiGlyphs();
 		text.loadGlyphs();
 		this.x = x;
@@ -24,7 +25,8 @@ public class Text {
 	}
 	
 	public void drawString() {
-		text.drawString((int) x, (int) y, string);
+		
+		text.drawString((int) x, (int) y, string, color);
 	}
 	
 	public void setString(String string) {
@@ -57,5 +59,17 @@ public class Text {
 	
 	public void incrementY(double amount) {
 		y += amount;
+	}
+	
+	public Color getColor() {
+		return color;
+	}
+	
+	public void setColor(Color color) {
+		this.color = color;
+	}
+	
+	public void setAlpha(float value) {
+		color.a = value;
 	}
 }

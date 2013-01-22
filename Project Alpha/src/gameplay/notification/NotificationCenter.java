@@ -2,10 +2,10 @@ package gameplay.notification;
 
 import helper.Text;
 
-import java.awt.Color;
 import java.util.ArrayList;
 
 import org.lwjgl.opengl.Display;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
@@ -18,7 +18,7 @@ public class NotificationCenter {
 	public NotificationCenter() throws SlickException {
 		notifications = new ArrayList<Notification>();
 		notificationBackground = new Image("gameplay/notification/NotificationBG.png");
-		message = new Text("", "Walkway", "Bold", 15, Color.WHITE, 0, 0);
+		message = new Text("", "Walkway", "Bold", 15, Color.white, 0, 0);
 	}
 	
 	public void addNotification(String string) throws SlickException {
@@ -36,7 +36,9 @@ public class NotificationCenter {
 			message.setString(notification.getMessage());
 			message.setX(notification.getMessageX());
 			message.setY(notification.getMessageY());
+			message.setAlpha(notification.getBackgroundAlpha());
 			message.drawString();
+			message.setAlpha(1f);
 		}
 	}
 	

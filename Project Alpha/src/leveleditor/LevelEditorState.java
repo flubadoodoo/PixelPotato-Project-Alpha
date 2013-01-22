@@ -3,10 +3,10 @@ package leveleditor;
 import helper.Status;
 import helper.Text;
 
-import java.awt.Color;
 import java.util.ArrayList;
 
 import org.lwjgl.opengl.Display;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -52,7 +52,7 @@ public class LevelEditorState extends BasicGameState {
 	
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 		gc.setMouseGrabbed(false);
-		watermark = new Text(Status.getProjectStatus(), "Walkway", "Bold", 20, Color.WHITE, 0, 10);
+		watermark = new Text(Status.getProjectStatus(), "Walkway", "Bold", 20, Color.white, 0, 10);
 		watermark.setX(Display.getWidth() - watermark.getWidth() - 10);
 		
 		setTileSizeSelection(1);

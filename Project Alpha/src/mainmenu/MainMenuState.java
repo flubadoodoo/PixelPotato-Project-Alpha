@@ -3,10 +3,9 @@ package mainmenu;
 import helper.Status;
 import helper.Text;
 
-import java.awt.Color;
-
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -47,7 +46,7 @@ public class MainMenuState extends BasicGameState {
 	}
 	
 	public void init(GameContainer gc, StateBasedGame sg) throws SlickException {
-		watermark = new Text(Status.getProjectStatus(), "Walkway", "Bold", 20, Color.BLACK, 0, 10);
+		watermark = new Text(Status.getProjectStatus(), "Walkway", "Bold", 20, Color.black, 0, 10);
 		watermark.setX(Display.getWidth() - watermark.getWidth() - 10);
 		background = new Image(IDP + "Main Menu Background.png");
 		
