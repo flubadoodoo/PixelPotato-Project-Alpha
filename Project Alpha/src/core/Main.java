@@ -41,7 +41,7 @@ public class Main extends StateBasedGame {
 	// Main
 	public static void main(String[] args) throws SlickException {
 		AppGameContainer game = new AppGameContainer(new ScalableGame(new Main(Status.getProjectStatus()), getWidth(), getHeight(), true));
-		game.setDisplayMode(1280, 800, true);
+		game.setDisplayMode(1280, 720, false);
 		game.setVSync(true);
 		game.setMouseGrabbed(true);
 		game.setTargetFrameRate(60);
@@ -77,16 +77,16 @@ public class Main extends StateBasedGame {
 		return LEVEL_EDITOR_STATE;
 	}
 	
-	public static int getNetworkState() {
-		return NETWORK_STATE;
-	}
-	
 	public static int getWidth() {
 		return WIDTH;
 	}
 	
 	public static int getHeight() {
 		return HEIGHT;
+	}
+	
+	public static int getNetworkState() {
+		return NETWORK_STATE;
 	}
 	
 }
