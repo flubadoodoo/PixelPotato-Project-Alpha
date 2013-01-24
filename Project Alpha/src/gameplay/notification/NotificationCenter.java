@@ -4,10 +4,11 @@ import helper.Text;
 
 import java.util.ArrayList;
 
-import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+
+import core.Main;
 
 public class NotificationCenter {
 	
@@ -26,7 +27,7 @@ public class NotificationCenter {
 			notifications.get(i).incrementY(-notifications.get(i).getHeight() - notifications.get(i).getHeight() / 4);
 		}
 		message.setString(string);
-		notifications.add(new Notification(string, 10, Display.getHeight() - 10, notificationBackground.getWidth(), notificationBackground.getHeight(), message.getWidth(), message.getHeight()));
+		notifications.add(new Notification(string, 10, Main.getHeight() - 10, notificationBackground.getWidth(), notificationBackground.getHeight(), message.getWidth(), message.getHeight()));
 	}
 	
 	public void draw() {

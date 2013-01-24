@@ -5,10 +5,11 @@ import gameplay.entities.weapon.gun.AutomaticGun;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 
-import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+
+import core.Main;
 
 public class Player {
 	
@@ -40,8 +41,8 @@ public class Player {
 	
 	static {
 		IDP = "gameplay/entities/player/sprites/";
-		weaponX = Display.getWidth() / 2;
-		weaponY = Display.getHeight() / 2;
+		weaponX = Main.getWidth() / 2;
+		weaponY = Main.getHeight() / 2;
 	}
 	
 	public Player() throws SlickException {
@@ -52,8 +53,8 @@ public class Player {
 		leftWalking = new Animation(new Image[] { sprites[2], sprites[3] }, 500);
 		leftWalking.setAutoUpdate(false);
 		leftWalking.setLooping(true);
-		x = Display.getWidth() / 2 - sprites[0].getWidth() / 2;
-		y = Display.getHeight() / 2 - sprites[0].getHeight() / 2;
+		x = Main.getWidth() / 2 - sprites[0].getWidth() / 2;
+		y = Main.getHeight() / 2 - sprites[0].getHeight() / 2;
 		boundingBox = new Rectangle.Double(x, y, sprites[0].getWidth(), sprites[0].getHeight());
 		setMovementState(PLAYER_MOVEMENT_STATE.Standing);
 		setWalkingState(PLAYER_WALKING_STATE.Right);

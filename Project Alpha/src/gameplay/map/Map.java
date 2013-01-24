@@ -5,9 +5,10 @@ import gameplay.map.tiles.Tile;
 import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
-import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+
+import core.Main;
 
 public class Map {
 	
@@ -59,7 +60,7 @@ public class Map {
 	}
 	
 	private boolean isOnMap(Tile tile) {
-		return (tile.getX() + tile.getScale() >= -xOff && tile.getX() <= -xOff + Display.getWidth());
+		return (tile.getX() + tile.getScale() >= -xOff && tile.getX() <= -xOff + Main.getWidth());
 	}
 	
 	// GETTERS & SETTERS

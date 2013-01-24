@@ -4,7 +4,6 @@ import helper.Status;
 import helper.Text;
 import helper.Timer;
 
-import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -49,7 +48,7 @@ public class SplashState extends BasicGameState {
 		anim.stopAt(splashAnim.length - 1);
 		
 		watermark = new Text(Status.getProjectStatus(), "Walkway", "Bold", 20, Color.black, 0, 10);
-		watermark.setX(Display.getWidth() - watermark.getWidth() - 10);
+		watermark.setX(Main.getWidth() - watermark.getWidth() - 10);
 	}
 	
 	private void initTimers(GameContainer gc) {

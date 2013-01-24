@@ -5,7 +5,6 @@ import helper.Text;
 
 import java.util.ArrayList;
 
-import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -14,6 +13,8 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+
+import core.Main;
 
 public class LevelEditorState extends BasicGameState {
 	
@@ -53,7 +54,7 @@ public class LevelEditorState extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 		gc.setMouseGrabbed(false);
 		watermark = new Text(Status.getProjectStatus(), "Walkway", "Bold", 20, Color.white, 0, 10);
-		watermark.setX(Display.getWidth() - watermark.getWidth() - 10);
+		watermark.setX(Main.getWidth() - watermark.getWidth() - 10);
 		
 		setTileSizeSelection(1);
 		
@@ -61,8 +62,8 @@ public class LevelEditorState extends BasicGameState {
 		
 		gridOn = true;
 		
-		xOff = Display.getWidth() / 2.0;
-		yOff = Display.getHeight() / 2.0;
+		xOff = Main.getWidth() / 2.0;
+		yOff = Main.getHeight() / 2.0;
 		grid = new ArrayList<ArrayList<ArrayList<LETile>>>();
 		for (int i = 0; i < 4; i++)
 			grid.add(new ArrayList<ArrayList<LETile>>());
@@ -89,13 +90,13 @@ public class LevelEditorState extends BasicGameState {
 	}
 	
 	private void drawGrid(Graphics g) throws SlickException {
-		for (int i = 0; i < Display.getWidth() / getScale(); i += WHOLE_TILE) {
+		for (int i = 0; i < Main.getWidth() / getScale(); i += WHOLE_TILE) {
 			g.setColor(new org.newdawn.slick.Color(1f, 1f, 1f, 0.1f));
-			g.drawLine(i + (float) (xOff % (WHOLE_TILE)), 0, i + (float) (xOff % (WHOLE_TILE)), (float) (Display.getHeight() / getScale()));
-			g.drawLine(i + (float) (-TILE_SPACE) + (float) (xOff % (WHOLE_TILE)), 0, i + (float) (-TILE_SPACE) + (float) (xOff % (WHOLE_TILE)), (float) (Display.getHeight() / getScale()));
-			if (i < Display.getHeight() / getScale()) {
-				g.drawLine(0, i + (float) (yOff % (WHOLE_TILE)), (float) (Display.getWidth() / getScale()), i + (float) (yOff % (WHOLE_TILE)));
-				g.drawLine(0, i + (float) (TILE_SPACE) + (float) (yOff % (WHOLE_TILE)), (float) (Display.getWidth() / getScale()), i + (float) (TILE_SPACE) + (float) (yOff % (WHOLE_TILE)));
+			g.drawLine(i + (float) (xOff % (WHOLE_TILE)), 0, i + (float) (xOff % (WHOLE_TILE)), (float) (Main.getHeight() / getScale()));
+			g.drawLine(i + (float) (-TILE_SPACE) + (float) (xOff % (WHOLE_TILE)), 0, i + (float) (-TILE_SPACE) + (float) (xOff % (WHOLE_TILE)), (float) (Main.getHeight() / getScale()));
+			if (i < Main.getHeight() / getScale()) {
+				g.drawLine(0, i + (float) (yOff % (WHOLE_TILE)), (float) (Main.getWidth() / getScale()), i + (float) (yOff % (WHOLE_TILE)));
+				g.drawLine(0, i + (float) (TILE_SPACE) + (float) (yOff % (WHOLE_TILE)), (float) (Main.getWidth() / getScale()), i + (float) (TILE_SPACE) + (float) (yOff % (WHOLE_TILE)));
 			}
 			
 			/*g.drawLine((float) ((i + xOff % WHOLE_TILE) * scale), 0, (float) ((i + xOff % WHOLE_TILE) * scale), Display.getHeight());
@@ -110,8 +111,8 @@ public class LevelEditorState extends BasicGameState {
 	
 	private void drawOrigin(Graphics g) {
 		g.setColor(new org.newdawn.slick.Color(1f, 0f, 0f, 0.25f));
-		g.drawLine((float) xOff, (float) 0, (float) xOff, (float) (Display.getHeight() / getScale()));
-		g.drawLine((float) 0, (float) yOff, (float) (Display.getWidth() / getScale()), (float) yOff);
+		g.drawLine((float) xOff, (float) 0, (float) xOff, (float) (Main.getHeight() / getScale()));
+		g.drawLine((float) 0, (float) yOff, (float) (Main.getWidth() / getScale()), (float) yOff);
 		/*g.drawLine((float) (xOff * scale), (float) 0, (float) (xOff * scale), (float) Display.getHeight());
 		g.drawLine((float) 0, (float) (yOff * scale), (float) Display.getWidth(), (float) (yOff * scale));*/
 	}
@@ -160,8 +161,8 @@ public class LevelEditorState extends BasicGameState {
 	
 	private void reset() {
 		setScale(1.0);
-		xOff = Display.getWidth() / 2;
-		yOff = Display.getHeight() / 2;
+		xOff = Main.getWidth() / 2;
+		yOff = Main.getHeight() / 2;
 	}
 	
 	private int getQuadrant(int mouseX, int mouseY) {

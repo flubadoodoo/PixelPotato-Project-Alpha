@@ -10,7 +10,6 @@ import helper.Text;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 
-import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -51,9 +50,8 @@ public class GameplayState extends BasicGameState {
 	}
 	
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
-		gc.getGraphics().setClip(0, 0, Display.getWidth(), Display.getHeight());
 		watermark = new Text(Status.getProjectStatus(), "Walkway", "Bold", 20, Color.white, 0, 10);
-		watermark.setX(Display.getWidth() - watermark.getWidth() - 10);
+		watermark.setX(Main.getWidth() - watermark.getWidth() - 10);
 		notificationCenter = new NotificationCenter();
 		map = new Map(1000);
 		player = new Player();
@@ -182,7 +180,7 @@ public class GameplayState extends BasicGameState {
 	}
 	
 	private boolean isOnScreen(Tile tile) {
-		return (tile.getX() + tile.getScale() >= -map.getxOff() && tile.getX() <= -map.getxOff() + Display.getWidth());
+		return (tile.getX() + tile.getScale() >= -map.getxOff() && tile.getX() <= -map.getxOff() + Main.getWidth());
 	}
 	
 	public int getID() {
