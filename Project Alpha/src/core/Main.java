@@ -13,6 +13,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.Log;
 
 import splash.SplashState;
+import testing.network.NetworkState;
 
 public class Main extends StateBasedGame {
 	
@@ -21,6 +22,7 @@ public class Main extends StateBasedGame {
 	private static final int	MAIN_MENU_STATE;
 	private static final int	GAMEPLAY_STATE;
 	private static final int	LEVEL_EDITOR_STATE;
+	private static final int	NETWORK_STATE;
 	
 	private static final int	WIDTH;
 	private static final int	HEIGHT;
@@ -30,6 +32,7 @@ public class Main extends StateBasedGame {
 		MAIN_MENU_STATE = 1;
 		GAMEPLAY_STATE = 2;
 		LEVEL_EDITOR_STATE = 3;
+		NETWORK_STATE = 4;
 		
 		WIDTH = 1280;
 		HEIGHT = 720;
@@ -58,6 +61,8 @@ public class Main extends StateBasedGame {
 		this.addState(new MainMenuState(MAIN_MENU_STATE));
 		this.addState(new GameplayState(GAMEPLAY_STATE));
 		this.addState(new LevelEditorState(LEVEL_EDITOR_STATE));
+		this.addState(new NetworkState(NETWORK_STATE));
+		this.enterState(NETWORK_STATE);
 	}
 	
 	public static int getMainMenuState() {
@@ -70,6 +75,10 @@ public class Main extends StateBasedGame {
 	
 	public static int getLevelEditorState() {
 		return LEVEL_EDITOR_STATE;
+	}
+	
+	public static int getNetworkState() {
+		return NETWORK_STATE;
 	}
 	
 	public static int getWidth() {
