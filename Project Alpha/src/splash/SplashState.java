@@ -25,6 +25,7 @@ public class SplashState extends BasicGameState {
 	private Image[]		splashAnim;
 	public Animation	anim;
 	private long		startTime;
+	private long		endTime;
 	private int			startDelay;
 	private int			endDelay;
 	
@@ -53,6 +54,7 @@ public class SplashState extends BasicGameState {
 	
 	private void initTimers(GameContainer gc) {
 		startTime = -1;
+		endTime = -1;
 		startDelay = 1000;
 		endDelay = 2000;
 	}
@@ -65,15 +67,17 @@ public class SplashState extends BasicGameState {
 	public void update(GameContainer gc, StateBasedGame sb, int delta) throws SlickException {
 		if (gc.getInput().isKeyDown(Input.KEY_ESCAPE))
 			gc.exit();
+		if (startTime == -1) {
+			startTime = gc.getTime();
+		}
 		if (anim.isStopped()) {
-			if (startTime == -1) {
-				startTime = gc.getTime();
+			if (endTime == -1) {
+				endTime = gc.getTime();
 			}
-			if (Timer.timeElapsed(gc.getTime(), startTime) > endDelay) {
+			if (Timer.timeElapsed(gc.getTime(), endTime) > endDelay) {
 				sb.enterState(Main.getMainMenuState(), new FadeOutTransition(), new FadeInTransition());
 			}
-		}
-		if (gc.getTime() - startTime > startDelay) {
+		} else if (Timer.timeElapsed(gc.getTime(), startTime) > startDelay) {
 			anim.update(delta);
 		}
 	}
@@ -87,6 +91,14 @@ public class SplashState extends BasicGameState {
 	
 	public int getID() {
 		return STATE;
+	}
+	
+	public long getEndTime() {
+		return endTime;
+	}
+	
+	public void setEndTime(long endTime) {
+		this.endTime = endTime;
 	}
 	
 }

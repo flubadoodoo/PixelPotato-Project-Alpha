@@ -5,7 +5,6 @@ import helper.Status;
 import leveleditor.LevelEditorState;
 import mainmenu.MainMenuState;
 
-import org.lwjgl.opengl.Display;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.ScalableGame;
@@ -39,7 +38,7 @@ public class Main extends StateBasedGame {
 	// Main
 	public static void main(String[] args) throws SlickException {
 		AppGameContainer game = new AppGameContainer(new ScalableGame(new Main(Status.getProjectStatus()), getWidth(), getHeight(), true));
-		game.setDisplayMode(Display.getWidth(), Display.getHeight(), true);
+		game.setDisplayMode(1280, 800, true);
 		game.setVSync(true);
 		game.setMouseGrabbed(true);
 		game.setTargetFrameRate(60);
@@ -72,11 +71,11 @@ public class Main extends StateBasedGame {
 	public static int getLevelEditorState() {
 		return LEVEL_EDITOR_STATE;
 	}
-
+	
 	public static int getWidth() {
 		return WIDTH;
 	}
-
+	
 	public static int getHeight() {
 		return HEIGHT;
 	}
