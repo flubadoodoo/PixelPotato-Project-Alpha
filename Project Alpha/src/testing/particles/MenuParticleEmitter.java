@@ -91,4 +91,10 @@ public class MenuParticleEmitter implements ParticleEmitter {
 		
 	}
 	
+	@Override
+	public void resume() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }
