@@ -30,7 +30,6 @@ public class MainMenuState extends BasicGameState {
 	private Image[]			soloSelection;
 	private Image[]			coopSelection;
 	private Image[]			optionsSelection;
-	private Image[]			levelEditorSelection;
 	
 	private static int		STATE;
 	private static String	IDP;
@@ -40,67 +39,59 @@ public class MainMenuState extends BasicGameState {
 		IDP = "mainmenu/images/";
 	}
 	
-	public MainMenuState(int STATE) {
+	public MainMenuState (int STATE) {
 		MainMenuState.STATE = STATE;
 	}
 	
 	public void init(GameContainer gc, StateBasedGame sg) throws SlickException {
-		watermark = new Text(Status.getProjectStatus(), "Walkway", "Bold", 20, Color.black, 0, 10);
-		watermark.setX(Main.getWidth() - watermark.getWidth() - 10);
-		background = new Image(IDP + "Main Menu Background.png");
+		watermark = new Text (Status.getProjectStatus (), "Walkway", "Bold", 20, Color.black, 0, 10);
+		watermark.setX (Main.getWidth () - watermark.getWidth () - 10);
+		background = new Image (IDP + "Main Menu Background.png");
 		
 		selectionIndex = 0;
 		
-		selectionArrowFrames = new Image[] { new Image(IDP + "selections/Arrow 1.png"), new Image(IDP + "selections/Arrow 2.png") };
-		selectionArrow = new Animation(selectionArrowFrames, 500);
+		selectionArrowFrames = new Image[] { new Image (IDP + "selections/Arrow 1.png"), new Image (IDP + "selections/Arrow 2.png") };
+		selectionArrow = new Animation (selectionArrowFrames, 500);
 		
-		soloSelection = new Image[] { new Image(IDP + "selections/Solo Deselected.png"), new Image(IDP + "selections/Solo Selected.png") };
-		coopSelection = new Image[] { new Image(IDP + "selections/Coop Deselected.png"), new Image(IDP + "selections/Coop Selected.png") };
-		optionsSelection = new Image[] { new Image(IDP + "selections/Options Deselected.png"), new Image(IDP + "selections/Options Selected.png") };
-		levelEditorSelection = new Image[] { new Image(IDP + "selections/Level Editor Deselected.png"), new Image(IDP + "selections/Level Editor Selected.png") };
+		soloSelection = new Image[] { new Image (IDP + "selections/Solo Deselected.png"), new Image (IDP + "selections/Solo Selected.png") };
+		coopSelection = new Image[] { new Image (IDP + "selections/Coop Deselected.png"), new Image (IDP + "selections/Coop Selected.png") };
+		optionsSelection = new Image[] { new Image (IDP + "selections/Options Deselected.png"), new Image (IDP + "selections/Options Selected.png") };
 	}
 	
 	public void render(GameContainer gc, StateBasedGame sg, Graphics g) throws SlickException {
-		background.draw();
-		watermark.drawString();
-		selectionArrow.draw(325, (selectionIndex == 0) ? 350 : (selectionIndex == 1) ? 425 : (selectionIndex == 2) ? 500 : 575);
-		drawSelections();
+		background.draw ();
+		watermark.drawString ();
+		selectionArrow.draw (325, (selectionIndex == 0) ? 350 : (selectionIndex == 1) ? 425 : (selectionIndex == 2) ? 500 : 575);
+		drawSelections ();
 	}
 	
 	private void drawSelections() {
-		soloSelection[(selectionIndex == 0) ? 1 : 0].draw(236, 325);
-		coopSelection[(selectionIndex == 1) ? 1 : 0].draw(223, 400);
-		optionsSelection[(selectionIndex == 2) ? 1 : 0].draw(175, 475);
-		levelEditorSelection[(selectionIndex == 3) ? 1 : 0].draw(25, 550);
+		soloSelection[(selectionIndex == 0) ? 1 : 0].draw (236, 325);
+		coopSelection[(selectionIndex == 1) ? 1 : 0].draw (223, 400);
+		optionsSelection[(selectionIndex == 2) ? 1 : 0].draw (175, 475);
 	}
 	
 	public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
-		Input input = gc.getInput();
-		if (input.isKeyPressed(Input.KEY_ESCAPE))
-			gc.exit();
-		if (input.isKeyPressed(Input.KEY_DOWN)) {
-			if (selectionIndex < 3)
-				selectionIndex++;
+		Input input = gc.getInput ();
+		if (input.isKeyPressed (Input.KEY_ESCAPE)) gc.exit ();
+		if (input.isKeyPressed (Input.KEY_DOWN)) {
+			if (selectionIndex < 2) selectionIndex++;
 		}
-		if (input.isKeyPressed(Input.KEY_UP)) {
-			if (selectionIndex > 0)
-				selectionIndex--;
+		if (input.isKeyPressed (Input.KEY_UP)) {
+			if (selectionIndex > 0) selectionIndex--;
 		}
-		if (input.isKeyPressed(Input.KEY_ENTER)) {
+		if (input.isKeyPressed (Input.KEY_ENTER)) {
 			switch (selectionIndex) {
-			case 0:
-				game.enterState(Main.getGameplayState(), new FadeOutTransition(), new FadeInTransition());
-				break;
-			case 1:
-				break;
-			case 2:
-				break;
-			case 3:
-				game.enterState(Main.getLevelEditorState(), new FadeOutTransition(), new FadeInTransition());
-				break;
+				case 0:
+					game.enterState (Main.getGameplayState (), new FadeOutTransition (), new FadeInTransition ());
+					break;
+				case 1:
+					break;
+				case 2:
+					break;
 			}
 		}
-		selectionArrow.update(delta);
+		selectionArrow.update (delta);
 	}
 	
 	public int getID() {
