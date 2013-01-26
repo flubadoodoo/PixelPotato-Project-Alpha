@@ -2,43 +2,28 @@ package helper;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.UnicodeFont;
-import org.newdawn.slick.font.effects.ColorEffect;
 
 public class Text {
 	
-	private UnicodeFont	text;
-	private double		x, y;
-	private String		string;
-	private Color		color;
+	public static enum SIZE {
+		small, medium, large
+	};
 	
-	@SuppressWarnings ("unchecked")
-	public Text (String string, String fontName, String fontType, int size, Color color, double x, double y) throws SlickException {
-		this.color = color;
-		text = new UnicodeFont("helper/font/" + fontName + "/" + fontType + ".ttf", size, false, false);
-		text.getEffects().add(new ColorEffect());
-		text.addAsciiGlyphs();
-		text.loadGlyphs();
+	private String	string;
+	private SIZE	size;
+	private double	x, y;
+	private Color	color;
+	
+	public Text(String string, Text.SIZE size, double x, double y, Color color) throws SlickException {
+		this.string = string;
+		this.size = size;
 		this.x = x;
 		this.y = y;
-		this.string = string;
-	}
-	
-	public void drawString() {
-		
-		text.drawString((int) x, (int) y, string, color);
+		this.color = color;
 	}
 	
 	public void setString(String string) {
 		this.string = string;
-	}
-	
-	public int getWidth() {
-		return text.getWidth(string);
-	}
-	
-	public int getHeight() {
-		return text.getHeight(string);
 	}
 	
 	public void setX(double x) {
@@ -72,4 +57,25 @@ public class Text {
 	public void setAlpha(float value) {
 		color.a = value;
 	}
+	
+	public String getString() {
+		return string;
+	}
+	
+	public SIZE getSize() {
+		return size;
+	}
+	
+	public void setSize(SIZE size) {
+		this.size = size;
+	}
+	
+	public double getWidth() {
+		return TextDrawable.getWidth(string, size);
+	}
+	
+	public double getHeight() {
+		return TextDrawable.getHeight(string, size);
+	}
+	
 }

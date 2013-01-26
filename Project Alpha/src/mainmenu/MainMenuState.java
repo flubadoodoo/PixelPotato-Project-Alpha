@@ -2,6 +2,9 @@ package mainmenu;
 
 import helper.Status;
 import helper.Text;
+import helper.TextDrawable;
+
+import java.util.ArrayList;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
@@ -19,79 +22,154 @@ import core.Main;
 
 public class MainMenuState extends BasicGameState {
 	
-	private Text			watermark;
-	private Image			background;
+	private Text				watermark;
+	private Image				background;
 	
-	private int				selectionIndex;
+	private int					selectionIndex;
 	
-	private Image[]			selectionArrowFrames;
-	private Animation		selectionArrow;
+	private Image[]				selectionArrowFrames;
+	private Animation			selectionArrow;
 	
-	private Image[]			soloSelection;
-	private Image[]			coopSelection;
-	private Image[]			optionsSelection;
+	private ArrayList<Image[]>	selectionImages;
+	private float				alignmentX;
+	private float				alignmentY;
+	private int					distanceBetweenSelections	= 74;
 	
-	private static int		STATE;
-	private static String	IDP;
+	private static int			STATE;
+	private static String		IDP;
 	
 	static {
 		STATE = -1;
 		IDP = "mainmenu/images/";
 	}
 	
-	public MainMenuState (int STATE) {
+	public MainMenuState(int STATE) {
 		MainMenuState.STATE = STATE;
 	}
 	
-	public void init(GameContainer gc, StateBasedGame sg) throws SlickException {
-		watermark = new Text (Status.getProjectStatus (), "Walkway", "Bold", 20, Color.black, 0, 10);
-		watermark.setX (Main.getWidth () - watermark.getWidth () - 10);
-		background = new Image (IDP + "Main Menu Background.png");
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+		initializeStateState();
+	}
+	
+	public void leave(GameContainer container, StateBasedGame game) throws SlickException {
+		destroyStateState();
+	}
+	
+	public void initializeStateState() throws SlickException {
+		initWatermark();
+		initBackground();
+		initSelections();
+	}
+	
+	private void destroyStateState() throws SlickException {
+		destroyWatermark();
+		destroyBackground();
+		destroySelections();
+	}
+	
+	private void initWatermark() throws SlickException {
+		watermark = new Text(Status.getProjectStatus(), Text.SIZE.large, 0, 10, Color.black);
+		watermark.setX(Main.getWidth() - watermark.getWidth() - 10);
+	}
+	
+	private void destroyWatermark() {
+		watermark = null;
+	}
+	
+	private void initBackground() throws SlickException {
+		background = new Image(IDP + "Main Menu Background.png");
+	}
+	
+	private void destroyBackground() throws SlickException {
+		background.destroy();
+		background = null;
+	}
+	
+	private void initSelections() throws SlickException {
+		initSelectionImages();
+		initSelectionVars();
+	}
+	
+	private void destroySelections() throws SlickException {
+		destroySelectionImages();
+	}
+	
+	private void initSelectionImages() throws SlickException {
+		selectionArrowFrames = new Image[] { new Image(IDP + "selections/Arrow 1.png"), new Image(IDP + "selections/Arrow 2.png") };
+		selectionArrow = new Animation(selectionArrowFrames, 500);
 		
+		selectionImages = new ArrayList<Image[]>(2);
+		selectionImages.add(new Image[] { new Image(IDP + "selections/Solo Deselected.png"), new Image(IDP + "selections/Solo Selected.png") });
+		selectionImages.add(new Image[] { new Image(IDP + "selections/Coop Deselected.png"), new Image(IDP + "selections/Coop Selected.png") });
+	}
+	
+	private void destroySelectionImages() throws SlickException {
+		for (int i = 0; i < selectionArrowFrames.length; i++) {
+			selectionArrowFrames[i].destroy();
+		}
+		selectionArrowFrames = null;
+		for (int i = 0; i < selectionImages.size(); i++) {
+			for (int j = 0; j < selectionImages.get(i).length; j++) {
+				selectionImages.get(i)[j].destroy();
+			}
+		}
+		selectionImages = null;
+	}
+	
+	private void initSelectionVars() {
 		selectionIndex = 0;
 		
-		selectionArrowFrames = new Image[] { new Image (IDP + "selections/Arrow 1.png"), new Image (IDP + "selections/Arrow 2.png") };
-		selectionArrow = new Animation (selectionArrowFrames, 500);
+		float largest = selectionImages.get(0)[0].getWidth();
+		float height = selectionImages.get(0)[0].getHeight();
+		if (selectionImages.size() > 1) {
+			for (int i = 1; i < selectionImages.size(); i++) {
+				largest = Math.max(selectionImages.get(i - 1)[0].getWidth(), selectionImages.get(i)[0].getWidth());
+				height += distanceBetweenSelections;
+			}
+		}
+		alignmentX = distanceBetweenSelections + largest;
+		alignmentY = Main.getHeight() - distanceBetweenSelections - height;
+	}
+	
+	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		
-		soloSelection = new Image[] { new Image (IDP + "selections/Solo Deselected.png"), new Image (IDP + "selections/Solo Selected.png") };
-		coopSelection = new Image[] { new Image (IDP + "selections/Coop Deselected.png"), new Image (IDP + "selections/Coop Selected.png") };
-		optionsSelection = new Image[] { new Image (IDP + "selections/Options Deselected.png"), new Image (IDP + "selections/Options Selected.png") };
 	}
 	
 	public void render(GameContainer gc, StateBasedGame sg, Graphics g) throws SlickException {
-		background.draw ();
-		watermark.drawString ();
-		selectionArrow.draw (325, (selectionIndex == 0) ? 350 : (selectionIndex == 1) ? 425 : (selectionIndex == 2) ? 500 : 575);
-		drawSelections ();
+		background.draw();
+		TextDrawable.drawString(watermark);
+		drawSelections();
+		selectionArrow.draw(alignmentX + distanceBetweenSelections / 2, (selectionIndex == 0) ? alignmentY + selectionImages.get(0)[0].getHeight() / 2 : alignmentY + distanceBetweenSelections + selectionImages.get(1)[0].getHeight() / 4 + 5);
 	}
 	
 	private void drawSelections() {
-		soloSelection[(selectionIndex == 0) ? 1 : 0].draw (236, 325);
-		coopSelection[(selectionIndex == 1) ? 1 : 0].draw (223, 400);
-		optionsSelection[(selectionIndex == 2) ? 1 : 0].draw (175, 475);
+		for (int i = 0; i < selectionImages.size(); i++) {
+			selectionImages.get(i)[(selectionIndex == i) ? 1 : 0].draw(alignmentX - selectionImages.get(i)[0].getWidth(), alignmentY + i * distanceBetweenSelections);
+		}
 	}
 	
 	public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
-		Input input = gc.getInput ();
-		if (input.isKeyPressed (Input.KEY_ESCAPE)) gc.exit ();
-		if (input.isKeyPressed (Input.KEY_DOWN)) {
-			if (selectionIndex < 2) selectionIndex++;
+		Input input = gc.getInput();
+		if (input.isKeyPressed(Input.KEY_ESCAPE))
+			gc.exit();
+		if (input.isKeyPressed(Input.KEY_DOWN)) {
+			if (selectionIndex < selectionImages.size() - 1)
+				selectionIndex++;
 		}
-		if (input.isKeyPressed (Input.KEY_UP)) {
-			if (selectionIndex > 0) selectionIndex--;
+		if (input.isKeyPressed(Input.KEY_UP)) {
+			if (selectionIndex > 0)
+				selectionIndex--;
 		}
-		if (input.isKeyPressed (Input.KEY_ENTER)) {
+		if (input.isKeyPressed(Input.KEY_ENTER)) {
 			switch (selectionIndex) {
 				case 0:
-					game.enterState (Main.getGameplayState (), new FadeOutTransition (), new FadeInTransition ());
+					game.enterState(Main.getGameplayState(), new FadeOutTransition(), new FadeInTransition());
 					break;
 				case 1:
 					break;
-				case 2:
-					break;
 			}
 		}
-		selectionArrow.update (delta);
+		selectionArrow.update(delta);
 	}
 	
 	public int getID() {

@@ -2,6 +2,7 @@ package core;
 
 import gameplay.core.GameplayState;
 import helper.Status;
+import helper.TextDrawable;
 import lobby.LobbyState;
 import mainmenu.MainMenuState;
 
@@ -44,12 +45,14 @@ public class Main extends StateBasedGame {
 	}
 	
 	// Constructor
-	public Main(String title) {
+	public Main(String title) throws SlickException {
 		super(title);
 	}
 	
 	// Initialize States
 	public void initStatesList(GameContainer gc) throws SlickException {
+		@SuppressWarnings ("unused")
+		TextDrawable text = new TextDrawable();
 		this.addState(new MainMenuState(MAIN_MENU_STATE));
 		this.addState(new LobbyState(LOBBY_STATE));
 		this.addState(new GameplayState(GAMEPLAY_STATE));

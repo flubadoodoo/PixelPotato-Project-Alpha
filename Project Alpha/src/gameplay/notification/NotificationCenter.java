@@ -1,6 +1,7 @@
 package gameplay.notification;
 
 import helper.Text;
+import helper.TextDrawable;
 
 import java.util.ArrayList;
 
@@ -19,7 +20,7 @@ public class NotificationCenter {
 	public NotificationCenter() throws SlickException {
 		notifications = new ArrayList<Notification>();
 		notificationBackground = new Image("gameplay/notification/NotificationBG.png");
-		message = new Text("", "Walkway", "Bold", 15, Color.white, 0, 0);
+		message = new Text("", Text.SIZE.medium, 0, 0, Color.white);
 	}
 	
 	public void addNotification(String string) throws SlickException {
@@ -38,7 +39,7 @@ public class NotificationCenter {
 			message.setX(notification.getMessageX());
 			message.setY(notification.getMessageY());
 			message.setAlpha(notification.getBackgroundAlpha());
-			message.drawString();
+			TextDrawable.drawString(message);
 			message.setAlpha(1f);
 		}
 	}
