@@ -36,10 +36,6 @@ public class GameplayState extends BasicGameState {
 	private Map							map;
 	private Player						player;
 	
-	// private Shape test;
-	// private org.newdawn.slick.geom.Polygon testg;
-	// private Shape rotated;
-	
 	static {
 		JUMP_STRENGTH = -20.0;
 		MOVE_SPEED = 0.01;
@@ -56,19 +52,6 @@ public class GameplayState extends BasicGameState {
 		map = new Map (1000);
 		player = new Player ();
 		notificationCenter.addNotification ("Game started");
-		/*
-		 * int[] x = new int[] { 500, 600, 600, 500 }; int[] y = new int[] {
-		 * 510, 510, 600, 600 }; test = new Polygon(x, y, 4); AffineTransform a
-		 * = new AffineTransform(); a.rotate(Math.toRadians(15),
-		 * test.getBounds().getCenterX(), test.getBounds().getCenterY());
-		 * rotated = a.createTransformedShape(test); testg = new
-		 * org.newdawn.slick.geom.Polygon(); PathIterator p =
-		 * rotated.getPathIterator(null); while (!p.isDone()) { float[] coords =
-		 * new float[6]; int t = p.currentSegment(coords);
-		 * System.out.println(coords[0] + ", " + coords[1]);
-		 * testg.addPoint(coords[0], coords[1]); if (testg.getPointCount() == 4)
-		 * { break; } p.next(); }
-		 */
 	}
 	
 	public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
@@ -76,9 +59,6 @@ public class GameplayState extends BasicGameState {
 		map.drawMap ();
 		player.draw ();
 		notificationCenter.draw ();
-		// drawBoundingBoxes(g);
-		// g.setColor(new org.newdawn.slick.Color(0f, 1f, 0f, 1f));
-		// g.draw(testg);
 	}
 	
 	@SuppressWarnings ("unused")

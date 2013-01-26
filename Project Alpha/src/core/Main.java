@@ -2,6 +2,7 @@ package core;
 
 import gameplay.core.GameplayState;
 import helper.Status;
+import lobby.LobbyState;
 import mainmenu.MainMenuState;
 
 import org.newdawn.slick.AppGameContainer;
@@ -32,26 +33,26 @@ public class Main extends StateBasedGame {
 	
 	// Main
 	public static void main(String[] args) throws SlickException {
-		AppGameContainer game = new AppGameContainer (new ScalableGame (new Main (Status.getProjectStatus ()), getWidth (), getHeight (), true));
-		game.setDisplayMode (1280, 720, false);
-		game.setVSync (true);
-		game.setMouseGrabbed (true);
-		game.setTargetFrameRate (60);
-		game.setShowFPS (true);
-		Log.setVerbose (false);
-		game.start ();
+		AppGameContainer game = new AppGameContainer(new ScalableGame(new Main(Status.getProjectStatus()), getWidth(), getHeight(), true));
+		game.setDisplayMode(1280, 720, false);
+		game.setVSync(true);
+		game.setMouseGrabbed(true);
+		game.setTargetFrameRate(60);
+		game.setShowFPS(true);
+		Log.setVerbose(false);
+		game.start();
 	}
 	
 	// Constructor
-	public Main (String title) {
-		super (title);
+	public Main(String title) {
+		super(title);
 	}
 	
 	// Initialize States
 	public void initStatesList(GameContainer gc) throws SlickException {
-		this.addState (new MainMenuState (MAIN_MENU_STATE));
-		this.addState (new GameplayState (GAMEPLAY_STATE));
-		this.enterState (MAIN_MENU_STATE);
+		this.addState(new MainMenuState(MAIN_MENU_STATE));
+		this.addState(new LobbyState(LOBBY_STATE));
+		this.addState(new GameplayState(GAMEPLAY_STATE));
 	}
 	
 	public static int getMainMenuState() {
@@ -68,10 +69,6 @@ public class Main extends StateBasedGame {
 	
 	public static int getHeight() {
 		return HEIGHT;
-	}
-	
-	public static int getLobbyState() {
-		return LOBBY_STATE;
 	}
 	
 }

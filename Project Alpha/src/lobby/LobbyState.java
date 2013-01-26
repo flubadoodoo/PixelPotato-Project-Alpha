@@ -10,19 +10,19 @@ public class LobbyState extends BasicGameState {
 	
 	private static int	state;
 	
-	public LobbyState (int state) {
+	public LobbyState(int state) {
 		LobbyState.state = state;
 	}
 	
-	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
+	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		
 	}
 	
-	public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
+	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		
 	}
 	
-	public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
+	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		
 	}
 	
