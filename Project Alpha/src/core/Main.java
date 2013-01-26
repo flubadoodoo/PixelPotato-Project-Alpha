@@ -1,5 +1,6 @@
 package core;
 
+import gameplay.core.GameplayNetworkState;
 import gameplay.core.GameplayState;
 import helper.Status;
 import helper.TextDrawable;
@@ -19,6 +20,7 @@ public class Main extends StateBasedGame {
 	private static final int	MAIN_MENU_STATE;
 	private static final int	LOBBY_STATE;
 	private static final int	GAMEPLAY_STATE;
+	private static final int	GAMEPLAY_NETWORK_STATE;
 	
 	private static final int	WIDTH;
 	private static final int	HEIGHT;
@@ -27,6 +29,7 @@ public class Main extends StateBasedGame {
 		MAIN_MENU_STATE = 0;
 		LOBBY_STATE = 1;
 		GAMEPLAY_STATE = 2;
+		GAMEPLAY_NETWORK_STATE = 3;
 		
 		WIDTH = 1280;
 		HEIGHT = 720;
@@ -54,8 +57,10 @@ public class Main extends StateBasedGame {
 		@SuppressWarnings ("unused")
 		TextDrawable text = new TextDrawable();
 		this.addState(new MainMenuState(MAIN_MENU_STATE));
-		this.addState(new LobbyState(LOBBY_STATE));
+		this.addState(new LobbyState(LOBBY_STATE, false));
 		this.addState(new GameplayState(GAMEPLAY_STATE));
+		this.addState(new GameplayNetworkState(GAMEPLAY_NETWORK_STATE));
+		this.enterState(LOBBY_STATE);
 	}
 	
 	public static int getMainMenuState() {
