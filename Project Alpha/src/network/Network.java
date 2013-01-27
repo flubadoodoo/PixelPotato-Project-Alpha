@@ -1,30 +1,21 @@
-package lobby;
+package network;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
 
 public class Network {
 	
-	public static final int	port;
+	public static final String	host;
+	public static final int		port;
 	
 	static {
-		port = 12345;
+		host = "127.0.0.1";
+		port = 1234;
 	}
 	
 	public static void register(EndPoint endPoint) {
 		Kryo kryo = endPoint.getKryo();
-		kryo.register(RegisterName.class);
-		kryo.register(UpdateNames.class);
-		kryo.register(String[].class);
 		kryo.register(ChatMessage.class);
-	}
-	
-	public static class RegisterName {
-		public String	name;
-	}
-	
-	public static class UpdateNames {
-		public String[]	names;
 	}
 	
 	public static class ChatMessage {

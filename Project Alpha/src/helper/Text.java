@@ -6,15 +6,15 @@ import org.newdawn.slick.SlickException;
 public class Text {
 	
 	public static enum SIZE {
-		small, medium, large
+		small, medium, large, extralarge
 	};
 	
 	private String	string;
 	private SIZE	size;
-	private double	x, y;
+	private float	x, y;
 	private Color	color;
 	
-	public Text(String string, Text.SIZE size, double x, double y, Color color) throws SlickException {
+	public Text(String string, Text.SIZE size, float x, float y, Color color) throws SlickException {
 		this.string = string;
 		this.size = size;
 		this.x = x;
@@ -26,23 +26,23 @@ public class Text {
 		this.string = string;
 	}
 	
-	public void setX(double x) {
+	public void setX(float x) {
 		this.x = x;
 	}
 	
-	public double getX() {
+	public float getX() {
 		return x;
 	}
 	
-	public void setY(double y) {
+	public void setY(float y) {
 		this.y = y;
 	}
 	
-	public double getY() {
+	public float getY() {
 		return y;
 	}
 	
-	public void incrementY(double amount) {
+	public void incrementY(float amount) {
 		y += amount;
 	}
 	
@@ -70,11 +70,11 @@ public class Text {
 		this.size = size;
 	}
 	
-	public double getWidth() {
+	public float getWidth() {
 		return TextDrawable.getWidth(string, size);
 	}
 	
-	public double getHeight() {
+	public float getHeight() {
 		return TextDrawable.getHeight(string, size);
 	}
 	

@@ -1,11 +1,11 @@
 package core;
 
-import gameplay.core.GameplayNetworkState;
-import gameplay.core.GameplayState;
 import helper.Status;
 import helper.TextDrawable;
-import lobby.LobbyState;
 import mainmenu.MainMenuState;
+import network.ClientState;
+import network.LobbyState;
+import network.ServerState;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
@@ -19,8 +19,8 @@ public class Main extends StateBasedGame {
 	// States
 	private static final int	MAIN_MENU_STATE;
 	private static final int	LOBBY_STATE;
-	private static final int	GAMEPLAY_STATE;
-	private static final int	GAMEPLAY_NETWORK_STATE;
+	private static final int	SERVER_STATE;
+	private static final int	CLIENT_STATE;
 	
 	private static final int	WIDTH;
 	private static final int	HEIGHT;
@@ -28,8 +28,8 @@ public class Main extends StateBasedGame {
 	static {
 		MAIN_MENU_STATE = 0;
 		LOBBY_STATE = 1;
-		GAMEPLAY_STATE = 2;
-		GAMEPLAY_NETWORK_STATE = 3;
+		SERVER_STATE = 2;
+		CLIENT_STATE = 3;
 		
 		WIDTH = 1280;
 		HEIGHT = 720;
@@ -57,9 +57,9 @@ public class Main extends StateBasedGame {
 		@SuppressWarnings ("unused")
 		TextDrawable text = new TextDrawable();
 		this.addState(new MainMenuState(MAIN_MENU_STATE));
-		this.addState(new LobbyState(LOBBY_STATE, false));
-		this.addState(new GameplayState(GAMEPLAY_STATE));
-		this.addState(new GameplayNetworkState(GAMEPLAY_NETWORK_STATE));
+		this.addState(new LobbyState(LOBBY_STATE));
+		this.addState(new ServerState(SERVER_STATE));
+		this.addState(new ClientState(CLIENT_STATE));
 		this.enterState(LOBBY_STATE);
 	}
 	
@@ -68,7 +68,7 @@ public class Main extends StateBasedGame {
 	}
 	
 	public static int getGameplayState() {
-		return GAMEPLAY_STATE;
+		return SERVER_STATE;
 	}
 	
 	public static int getWidth() {
