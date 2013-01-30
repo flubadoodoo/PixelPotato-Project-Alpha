@@ -1,5 +1,7 @@
 package network;
 
+import java.util.ArrayList;
+
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
 
@@ -15,11 +17,20 @@ public class Network {
 	
 	public static void register(EndPoint endPoint) {
 		Kryo kryo = endPoint.getKryo();
-		kryo.register(ChatMessage.class);
+		kryo.register(ClientPosition.class);
+		kryo.register(ArrayList.class);
+		kryo.register(float[].class);
+		kryo.register(IDSet.class);
 	}
 	
-	public static class ChatMessage {
-		public String	message;
+	public static class ClientPosition {
+		public int		ID;
+		public float	locX;
+		public float	locY;
+	}
+	
+	public static class IDSet {
+		public int	ID;
 	}
 	
 }

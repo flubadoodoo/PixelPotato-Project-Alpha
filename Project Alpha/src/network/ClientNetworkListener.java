@@ -1,8 +1,9 @@
 package network;
 
-import network.Network.ChatMessage;
+import java.util.ArrayList;
 
-import org.newdawn.slick.SlickException;
+import network.Network.ClientPosition;
+import network.Network.IDSet;
 
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
@@ -17,29 +18,20 @@ public class ClientNetworkListener extends Listener {
 	}
 	
 	public void connected(Connection connection) {
-		try {
-			ClientState.getChatLog().addMessage("[SERVER] Someone has connected.");
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
+		
 	}
 	
 	public void disconnected(Connection connection) {
-		try {
-			ClientState.getChatLog().addMessage("[SERVER] Someone has disconnected.");
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
 		client.stop();
 	}
 	
+	@SuppressWarnings ("unchecked")
 	public void received(Connection connection, Object object) {
-		if (object instanceof ChatMessage) {
-			try {
-				ClientState.getChatLog().addMessage(((ChatMessage) object).message);
-			} catch (SlickException e) {
-				e.printStackTrace();
-			}
+		if (object instanceof ArrayList) {
+			ClientState.setAllClientPos((ArrayList<ClientPosition>) object);
+		}
+		if (object instanceof IDSet) {
+			ClientState.setID(((IDSet) object).ID);
 		}
 	}
 	

@@ -4,9 +4,9 @@ import helper.Text;
 import helper.TextDrawable;
 
 import java.io.IOException;
-import java.util.Scanner;
+import java.util.ArrayList;
 
-import network.Network.ChatMessage;
+import network.Network.ClientPosition;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -19,19 +19,30 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import com.esotericsoftware.kryonet.Client;
 
+import core.Main;
+
 public class ClientState extends BasicGameState {
 	
-	private static int		state;
+	private static int							state;
 	
-	private Client			client;
-	private Scanner			scanner;
+	private Client								client;
 	
-	private Image			clientTitleBG;
-	private Text			clientTitleText;
+	private Image								clientTitleBG;
+	private Text								clientTitleText;
 	
-	private static ChatLog	chatLog;
+	private ClientPosition						pos;
+	private static ArrayList<ClientPosition>	allClientPos;
+	private Image								sprite;
+	@SuppressWarnings ("unused")
+	private static int							ID;
 	
-	public void enter(GameContainer container, StateBasedGame game) {
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+		setSprite(new Image("network/p.png"));
+		setPos(new ClientPosition());
+		pos.locX = Main.getWidth() / 2;
+		pos.locY = Main.getHeight() / 2;
+		allClientPos = new ArrayList<Network.ClientPosition>();
+		
 		client = new Client();
 		client.start();
 		Network.register(client);
@@ -41,17 +52,6 @@ public class ClientState extends BasicGameState {
 			e.printStackTrace();
 		}
 		client.addListener(new ClientNetworkListener(client));
-		new Thread() {
-			public void run() {
-				while (scanner.hasNextLine()) {
-					String m = scanner.nextLine();
-					ChatMessage message = new ChatMessage();
-					message.message = m;
-					client.sendTCP(message);
-				}
-			}
-		}.start();
-		
 	}
 	
 	public ClientState(int state) {
@@ -61,14 +61,15 @@ public class ClientState extends BasicGameState {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		clientTitleBG = new Image("network/Client bg.png");
 		clientTitleText = new Text("Client", Text.SIZE.extralarge, 10 + (clientTitleBG.getWidth() / 2 - TextDrawable.getWidth("Server", Text.SIZE.extralarge) / 2), 35 + (clientTitleBG.getHeight() / 2 - TextDrawable.getHeight("Client", Text.SIZE.extralarge) / 2), Color.white);
-		scanner = new Scanner(System.in);
-		chatLog = new ChatLog();
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		g.drawImage(clientTitleBG, 10, 35);
 		TextDrawable.drawString(clientTitleText);
-		chatLog.render(300, 200);
+		for (ClientPosition c : allClientPos) {
+			// System.out.println(c.locX + ", " + c.locY);
+			sprite.draw(c.locX, c.locY);
+		}
 	}
 	
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
@@ -76,6 +77,21 @@ public class ClientState extends BasicGameState {
 		if (input.isKeyPressed(Input.KEY_ESCAPE)) {
 			container.exit();
 		}
+		float yo = 1f;
+		if (input.isKeyDown(Input.KEY_A)) {
+			pos.locX -= yo;
+		}
+		if (input.isKeyDown(Input.KEY_D)) {
+			pos.locX += yo;
+		}
+		if (input.isKeyDown(Input.KEY_W)) {
+			pos.locY -= yo;
+		}
+		if (input.isKeyDown(Input.KEY_S)) {
+			pos.locY += yo;
+		}
+		pos.ID = ID;
+		client.sendTCP(pos);
 	}
 	
 	public int getID() {
@@ -118,20 +134,32 @@ public class ClientState extends BasicGameState {
 		this.clientTitleText = clientTitleText;
 	}
 	
-	public Scanner getScanner() {
-		return scanner;
+	public static ArrayList<ClientPosition> getAllClientPos() {
+		return ClientState.allClientPos;
 	}
 	
-	public void setScanner(Scanner scanner) {
-		this.scanner = scanner;
+	public static void setAllClientPos(ArrayList<ClientPosition> allClientPos) {
+		ClientState.allClientPos = allClientPos;
 	}
 	
-	public static ChatLog getChatLog() {
-		return chatLog;
+	public Image getSprite() {
+		return sprite;
 	}
 	
-	public static void setChatLog(ChatLog chatLog) {
-		ClientState.chatLog = chatLog;
+	public void setSprite(Image sprite) {
+		this.sprite = sprite;
+	}
+	
+	public ClientPosition getPos() {
+		return pos;
+	}
+	
+	public void setPos(ClientPosition pos) {
+		this.pos = pos;
+	}
+	
+	public static void setID(int iD) {
+		ClientState.ID = iD;
 	}
 	
 }

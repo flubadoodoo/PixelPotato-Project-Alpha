@@ -1,6 +1,7 @@
 package network;
 
-import network.Network.ChatMessage;
+import network.Network.ClientPosition;
+import network.Network.IDSet;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -15,20 +16,33 @@ public class ServerNetworkListener extends Listener {
 	}
 	
 	public void connected(Connection connection) {
-		ChatMessage message = new ChatMessage();
-		message.message = "Someone has joined.";
-		server.sendToAllExceptTCP(connection.getID(), message);
+		IDSet id = new IDSet();
+		id.ID = connection.getID();
+		server.sendToTCP(connection.getID(), id);
+		ClientPosition pos = new ClientPosition();
+		pos.ID = connection.getID();
+		ServerState.getClientPositions().add(pos);
 	}
 	
 	public void disconnected(Connection connection) {
-		ChatMessage message = new ChatMessage();
-		message.message = "Someone has left.";
-		server.sendToAllExceptTCP(connection.getID(), message);
+		for (int i = 0; i < ServerState.getClientPositions().size(); i++) {
+			if (ServerState.getClientPositions().get(i).ID == connection.getID()) {
+				ServerState.getClientPositions().remove(i);
+				break;
+			}
+		}
 	}
 	
 	public void received(Connection connection, Object object) {
-		if (object instanceof ChatMessage) {
-			server.sendToAllTCP(object);
+		if (object instanceof ClientPosition) {
+			for (int i = 0; i < ServerState.getClientPositions().size(); i++) {
+				if (((ClientPosition) object).ID == ServerState.getClientPositions().get(i).ID) {
+					ServerState.getClientPositions().get(i).locX = ((ClientPosition) object).locX;
+					ServerState.getClientPositions().get(i).locY = ((ClientPosition) object).locY;
+					server.sendToAllTCP(ServerState.getClientPositions());
+					break;
+				}
+			}
 		}
 	}
 	
